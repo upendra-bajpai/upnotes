@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-09T07:23:24+00:00</updated><id>/feed.xml</id><title type="html">GeekyPanda</title><subtitle>Learning never stops</subtitle><entry><title type="html">C Importent notes</title><link href="/c-imp-notes/" rel="alternate" type="text/html" title="C Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/c-imp-notes</id><content type="html" xml:base="/c-imp-notes/">&lt;h1 id=&quot;c-importent-notes&quot;&gt;C Importent notes&lt;/h1&gt;
+&lt;h2 id=&quot;pointers&quot;&gt;Pointers&lt;/h2&gt;
+&lt;h3 id=&quot;size-of-pointers-is-fixed&quot;&gt;Size of pointers is fixed.&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Size of an array is number of elements multiplied by the type of element, that is why we get sizeof arri as 12 and sizeof arrc as 3. Size of a pointer is fixed for a compiler. All pointer types take same number of bytes for a compiler. That is why we get 4 for both ptri and ptrc.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Guess Output&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include&amp;lt;stdio.h&amp;gt; 
+int main() 
+{ 
+ int a; 
+ char *x; 
+ x = (char *) &amp;amp;a; 
+ a = 512; 
+ x[0] = 1; 
+ x[1] = 2; 
+ printf(&quot;%dn&quot;,a);   
+ return 0; 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;em&gt;Ans. machine dependent&lt;/em&gt;&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Explanation: 
+Output is 513 in a little endian machine. To understand this output, let integers be stored using 16 bits. In a little endian machine, when we do x[0] = 1 and x[1] = 2, the number a is changed to 00000001 00000010 which is representation of 513 in a little endian machine.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;segmenation-fault&quot;&gt;Segmenation fault:&lt;/h3&gt;
+&lt;p&gt;Segmentation fault is a specific kind of error caused by accessing memory that “does not belong to you.” It’s a helper mechanism that keeps you from corrupting the memory and introducing hard-to-debug memory bugs. Whenever you get a segfault you know you are doing something wrong with memory – accessing variable that has already been freed, writing to a read-only portion of the memory, etc. Segmentation fault is essentially the same in most languages that let you mess with the memory management, there is no principial difference between segfaults in C and C++.&lt;/p&gt;
+
+&lt;p&gt;There are many ways to get a segfault, at least in the lower-level languages such as C(++). A common way to get a segfault is to dereference a null pointer:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int *p = NULL;
+*p = 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Another segfault happens when you try to write to a portion of memory that was marked as read-only:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;char *str = &quot;Foo&quot;; // Compiler marks the constant string as read-only
+*str = 'b'; // Which means this is illegal and results in a segfault
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Dangling pointer points to a thing that does not exist any more, like here:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;char *p = NULL;
+{
+    char c;
+    p = &amp;amp;c;
+}
+// Now p is dangling
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The pointer p dangles because it points to character variable c that ceased to exist after the block ended. And when you try to dereference dangling pointer (like *p=’A’), you would probably get a segfault.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;void * type pointers cannot be de-referenced&lt;/em&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include&amp;lt;stdio.h&amp;gt;
+int main()
+{
+  int a = 12;
+  void *ptr = (int *)&amp;amp;a;
+  printf(&quot;%d&quot;, *ptr);
+  getchar();
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;em&gt;Ans. Compiler Error&lt;/em&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Increment the pointer or value?
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int arr[] = {1, 2, 3, 4, 5};
+  int *p = arr;
+  ++*p;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Explanation: 
+The expression ++*p is evaluated as &quot;++(*p)&quot; . So it increments the value of first element of array (doesn't change the pointer p). When p += 2 is done, p is changed to point to third element of array.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;time-complexity&quot;&gt;Time Complexity&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/dssorting.jpg&quot; alt=&quot;Array sorting&quot; /&gt;
+&lt;img src=&quot;/assets/images/sorting.jpg&quot; alt=&quot;Ds Sorting&quot; /&gt;
+&lt;img src=&quot;https://www.freecodecamp.org/news/semantic-html5-elements/&quot; alt=&quot;Sementics&quot; /&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">C Importent notes Pointers Size of pointers is fixed. Size of an array is number of elements multiplied by the type of element, that is why we get sizeof arri as 12 and sizeof arrc as 3. Size of a pointer is fixed for a compiler. All pointer types take same number of bytes for a compiler. That is why we get 4 for both ptri and ptrc.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">DLD Importent notes</title><link href="/dld-imp-notes/" rel="alternate" type="text/html" title="DLD Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/dld-imp-notes</id><content type="html" xml:base="/dld-imp-notes/">&lt;h1 id=&quot;dld-imp-notes&quot;&gt;DLD Imp notes&lt;/h1&gt;
+&lt;h5 id=&quot;according-to-amdahls-law-speed-up-for-infinite-number-of-process&quot;&gt;According to Amdahl’s law speed up for infinite number of process:&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; S = 1 / (1-P) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where p is parallel part of program Given, sequential part of program is 5%. So parallel part of the program (P)&lt;/p&gt;
+
+&lt;p&gt;= 1 - sequential part
+= 1 - 0.05 (or 5%)
+= 0.95 (or 95%)&lt;/p&gt;
+
+&lt;p&gt;Now S = 1 / (1-P)
+ie  S = 1 / (1-0.95)
+    S = 1 / 0.05
+    S = 20&lt;/p&gt;
+
+&lt;h5 id=&quot;a-cpu-has-a-32-kb-direct-mapped-cache-with-128-byte-block-size-suppose-a-is-a-2-dimensional-array-of-size-512512-with-elements-that-occupy-8-bytes-each-consider-the-code-segment&quot;&gt;A CPU has a 32 KB direct mapped cache with 128 byte block size. Suppose A is a 2 dimensional array of size 512×512 with elements that occupy 8 bytes each. Consider the code segment&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (i =0; i &amp;lt; 512; i++) {
+  for (j =0; j &amp;lt; 512; j++) {
+    x += A[i][j];
+  }
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;ans-&quot;&gt;Ans: &lt;img src=&quot;/assets/images/cache.jpg&quot; alt=&quot;cacheimage&quot; /&gt;&lt;/h3&gt;
+
+&lt;h5 id=&quot;for-a-pipelined-cpu-with-a-single-alu-consider-the-following-situations&quot;&gt;For a pipelined CPU with a single ALU, consider the following situations&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. The j + 1-st instruction uses the result of the j-th instruction
+    as an operand
+2. The execution of a conditional jump instruction
+3. The j-th and j + 1-st instructions require the ALU at the same 
+   time
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Which of the above can cause a hazard ?
+(A) 1 and 2 only
+(B) 2 and 3 only
+(C) 3 only
+(D) All of above&lt;/p&gt;
+
+&lt;h3 id=&quot;answer-d&quot;&gt;Answer: (D)&lt;/h3&gt;
+
+&lt;p&gt;Explanation: Case 1: Is of data dependency .this can’t be safe with single ALU so read after write.&lt;/p&gt;
+
+&lt;p&gt;Case 2:Conditional jumps are always hazardous they create conditional dependency in pipeline.&lt;/p&gt;
+
+&lt;p&gt;Case 3:This is write after read problem or concurrency dependency so hazardous&lt;/p&gt;
+
+&lt;p&gt;All the three are hazardous&lt;/p&gt;
+
+&lt;h5 id=&quot;a-micro-instruction-format-has-micro-ops-field-which-is-divided-into-three-subfields-f1-f2-f3-each-having-seven-distinct-micro-operations-condition-field-cd-for-four-status-bits-branch-field-br-having-four-options-used-in-conjunction-with-address-field-adf-the-address-space-is-of-128-memory-locations-the-size-of-micro-instruction-is&quot;&gt;A micro-instruction format has micro-ops field which is divided into three subfields F1, F2, F3 each having seven distinct micro-operations, condition field CD for four status bits, branch field BR having four options used in conjunction with address field ADF. The address space is of 128 memory locations. The size of micro-instruction is?&lt;/h5&gt;
+&lt;p&gt;The size of micro-instruction is:
+a.17
+b.20
+C.24
+D.32
+Microprocessor instruction format, which is divided into three subfields F1, F2, F3 each having seven distinct micro-operations, condition field CD for four status bits, branch field BR having four options used in conjunction with address field ADF. The address space is of 128 memory locations.ie: q8 F1,F2,F3 each having seven distinct micro-operation. So, 3 bits are required for each. Condition field have four status, it needs 2 bits for four different condition. Branch field have four option so,it needs 2 bits for four option. Now there are 128 different memory location, So, there 7 bits atre required for 128 diffeent location. Instruction Field: q8 (1) Total bits are 20. So, option (B) is correct.&lt;/p&gt;
+
+&lt;p&gt;Main components of memory tube display are:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Flood gun
+Primary gun
+Writing Beam
+Collector
+Storage grid
+Screen
+Focussing &amp;amp; deflection system
+Flood electron
+Ground or base
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Only Liquid crystal is not enlisted here and it is not the display component in memory tube&lt;/p&gt;
+
+&lt;h5 id=&quot;a-32---bit-wide-main-memory-unit-with-a-capacity-of-1-gb-is-built-using-256m-x-4-bit-dram-chips-the-number-of-rows-of-memory-cells-in-the-dram-chip-is-214-the-time-taken-to-perform-one-refresh-operation-is-50-nanoseconds-the-refresh-period-is-2-milliseconds-the-percentage-rounded-to-the-closet-integer-of-the-time-available-for-performing-the-memory-readwrite-operations-in-the-main-memory-unit-is-___&quot;&gt;A 32 - bit wide main memory unit with a capacity of 1 GB is built using 256M X 4-bit DRAM chips. The number of rows of memory cells in the DRAM chip is 214. The time taken to perform one refresh operation is 50 nanoseconds. The refresh period is 2 milliseconds. The percentage (rounded to the closet integer) of the time available for performing the memory read/write operations in the main memory unit is &lt;strong&gt;__&lt;/strong&gt;_&lt;/h5&gt;
+
+&lt;p&gt;Given, total number of rows is 214 and time taken to perform one refresh operation is 50 nanoseconds. So, total time taken to perform refresh operation = 214*50 nanoseconds = 819200 nanoseconds = 0.819200 milliseconds. But refresh period is 2 milliseconds. So, time spent in refresh period in percentage = (0.819200 milliseconds) / (2 milliseconds) = 0.4096 = 40.96% Hence, time spent in read/write operation = 100% - 40.96% = 59.04% = 59 (in percentage and rounded to the closet integer). So, answer is 59.&lt;/p&gt;
+
+&lt;p&gt;#####&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The RISC design philosophy generally incorporates a larger number of registers to prevent in large amounts of interactions with memory.
+The decision of RISC processor designers to provide simple addressing modes leads to uniform length instructions, so RISC instruction is of uniform fixed length.
+In the hardwired control unit, the control units use fixed logic circuits to interpret instructions and generate control signals from them. It is significantly faster than its counterpart but is rather inflexible. Most of the RISC processors are based on the hardwired control unit design approach.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;a-processor-has-16-integer-registers-r0-r1---r15-and-64-floating-point-registers-f0-f1---f63-it-uses-a-2-byte-instruction-format-there-are-four-categories-of-instructions-type-1-type-2-type-3-and-type-4-type-1-category-consists-of-four-instructions-each-with-3-integer-register-operands-3rs-type-2-category-consists-of-eight-instructions-each-with-2-floating-point-register-operands-2fs-type-3-category-consists-of-fourteen-instructions-each-with-one-integer-register-operand-and-one-floating-point-register-operand-1r1f-type-4-category-consists-of-n-instructions-each-with-a-floating-point-register-operand-1f-the-maximum-value-of-n-is-___--note--this-was-numerical-type-question&quot;&gt;A processor has 16 integer registers (R0, R1, … , R15) and 64 floating point registers (F0, F1, … , F63). It uses a 2-byte instruction format. There are four categories of instructions: Type-1, Type-2, Type-3, and Type 4. Type-1 category consists of four instructions, each with 3 integer register operands (3Rs). Type-2 category consists of eight instructions, each with 2 floating point register operands (2Fs). Type-3 category consists of fourteen instructions, each with one integer register operand and one floating point register operand (1R+1F). Type-4 category consists of N instructions, each with a floating point register operand (1F). The maximum value of N is &lt;strong&gt;__&lt;/strong&gt;_ . Note -This was Numerical Type question&lt;/h5&gt;
+
+&lt;h5 id=&quot;in-distributed-system-the-capacity-of-a-system-to-adapt-the-increased-service-load-is-called-____-&quot;&gt;In Distributed system, the capacity of a system to adapt the increased service load is called &lt;strong&gt;__&lt;/strong&gt;&lt;em&gt;__&lt;/em&gt; .&lt;/h5&gt;
+&lt;p&gt;Scalability
+till  page no 14 
+https://www.geeksforgeeks.org/computer-organization-and-architecture-gq/&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">DLD Imp notes According to Amdahl’s law speed up for infinite number of process:</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">C Importent notes</title><link href="/c-imp-notes/" rel="alternate" type="text/html" title="C Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/c-imp-notes</id><content type="html" xml:base="/c-imp-notes/">&lt;h1 id=&quot;c-importent-notes&quot;&gt;C Importent notes&lt;/h1&gt;
+&lt;h2 id=&quot;pointers&quot;&gt;Pointers&lt;/h2&gt;
+&lt;h3 id=&quot;size-of-pointers-is-fixed&quot;&gt;Size of pointers is fixed.&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Size of an array is number of elements multiplied by the type of element, that is why we get sizeof arri as 12 and sizeof arrc as 3. Size of a pointer is fixed for a compiler. All pointer types take same number of bytes for a compiler. That is why we get 4 for both ptri and ptrc.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Guess Output&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include&amp;lt;stdio.h&amp;gt; 
+int main() 
+{ 
+ int a; 
+ char *x; 
+ x = (char *) &amp;amp;a; 
+ a = 512; 
+ x[0] = 1; 
+ x[1] = 2; 
+ printf(&quot;%dn&quot;,a);   
+ return 0; 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;em&gt;Ans. machine dependent&lt;/em&gt;&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Explanation: 
+Output is 513 in a little endian machine. To understand this output, let integers be stored using 16 bits. In a little endian machine, when we do x[0] = 1 and x[1] = 2, the number a is changed to 00000001 00000010 which is representation of 513 in a little endian machine.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;segmenation-fault&quot;&gt;Segmenation fault:&lt;/h3&gt;
+&lt;p&gt;Segmentation fault is a specific kind of error caused by accessing memory that “does not belong to you.” It’s a helper mechanism that keeps you from corrupting the memory and introducing hard-to-debug memory bugs. Whenever you get a segfault you know you are doing something wrong with memory – accessing variable that has already been freed, writing to a read-only portion of the memory, etc. Segmentation fault is essentially the same in most languages that let you mess with the memory management, there is no principial difference between segfaults in C and C++.&lt;/p&gt;
+
+&lt;p&gt;There are many ways to get a segfault, at least in the lower-level languages such as C(++). A common way to get a segfault is to dereference a null pointer:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int *p = NULL;
+*p = 1;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Another segfault happens when you try to write to a portion of memory that was marked as read-only:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;char *str = &quot;Foo&quot;; // Compiler marks the constant string as read-only
+*str = 'b'; // Which means this is illegal and results in a segfault
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Dangling pointer points to a thing that does not exist any more, like here:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;char *p = NULL;
+{
+    char c;
+    p = &amp;amp;c;
+}
+// Now p is dangling
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The pointer p dangles because it points to character variable c that ceased to exist after the block ended. And when you try to dereference dangling pointer (like *p=’A’), you would probably get a segfault.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;void * type pointers cannot be de-referenced&lt;/em&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;#include&amp;lt;stdio.h&amp;gt;
+int main()
+{
+  int a = 12;
+  void *ptr = (int *)&amp;amp;a;
+  printf(&quot;%d&quot;, *ptr);
+  getchar();
+  return 0;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;&lt;em&gt;Ans. Compiler Error&lt;/em&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Increment the pointer or value?
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int arr[] = {1, 2, 3, 4, 5};
+  int *p = arr;
+  ++*p;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Explanation: 
+The expression ++*p is evaluated as &quot;++(*p)&quot; . So it increments the value of first element of array (doesn't change the pointer p). When p += 2 is done, p is changed to point to third element of array.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;time-complexity&quot;&gt;Time Complexity&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/dssorting.jpg&quot; alt=&quot;Array sorting&quot; /&gt;
+&lt;img src=&quot;/assets/images/sorting.jpg&quot; alt=&quot;Ds Sorting&quot; /&gt;
+&lt;img src=&quot;https://www.freecodecamp.org/news/semantic-html5-elements/&quot; alt=&quot;Sementics&quot; /&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">C Importent notes Pointers Size of pointers is fixed. Size of an array is number of elements multiplied by the type of element, that is why we get sizeof arri as 12 and sizeof arrc as 3. Size of a pointer is fixed for a compiler. All pointer types take same number of bytes for a compiler. That is why we get 4 for both ptri and ptrc.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">DLD Importent notes</title><link href="/dld-imp-notes/" rel="alternate" type="text/html" title="DLD Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/dld-imp-notes</id><content type="html" xml:base="/dld-imp-notes/">&lt;h1 id=&quot;dld-imp-notes&quot;&gt;DLD Imp notes&lt;/h1&gt;
+&lt;h5 id=&quot;according-to-amdahls-law-speed-up-for-infinite-number-of-process&quot;&gt;According to Amdahl’s law speed up for infinite number of process:&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; S = 1 / (1-P) 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;where p is parallel part of program Given, sequential part of program is 5%. So parallel part of the program (P)&lt;/p&gt;
+
+&lt;p&gt;= 1 - sequential part
+= 1 - 0.05 (or 5%)
+= 0.95 (or 95%)&lt;/p&gt;
+
+&lt;p&gt;Now S = 1 / (1-P)
+ie  S = 1 / (1-0.95)
+    S = 1 / 0.05
+    S = 20&lt;/p&gt;
+
+&lt;h5 id=&quot;a-cpu-has-a-32-kb-direct-mapped-cache-with-128-byte-block-size-suppose-a-is-a-2-dimensional-array-of-size-512512-with-elements-that-occupy-8-bytes-each-consider-the-code-segment&quot;&gt;A CPU has a 32 KB direct mapped cache with 128 byte block size. Suppose A is a 2 dimensional array of size 512×512 with elements that occupy 8 bytes each. Consider the code segment&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (i =0; i &amp;lt; 512; i++) {
+  for (j =0; j &amp;lt; 512; j++) {
+    x += A[i][j];
+  }
+} 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h3 id=&quot;ans-&quot;&gt;Ans: &lt;img src=&quot;/assets/images/cache.jpg&quot; alt=&quot;cacheimage&quot; /&gt;&lt;/h3&gt;
+
+&lt;h5 id=&quot;for-a-pipelined-cpu-with-a-single-alu-consider-the-following-situations&quot;&gt;For a pipelined CPU with a single ALU, consider the following situations&lt;/h5&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. The j + 1-st instruction uses the result of the j-th instruction
+    as an operand
+2. The execution of a conditional jump instruction
+3. The j-th and j + 1-st instructions require the ALU at the same 
+   time
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Which of the above can cause a hazard ?
+(A) 1 and 2 only
+(B) 2 and 3 only
+(C) 3 only
+(D) All of above&lt;/p&gt;
+
+&lt;h3 id=&quot;answer-d&quot;&gt;Answer: (D)&lt;/h3&gt;
+
+&lt;p&gt;Explanation: Case 1: Is of data dependency .this can’t be safe with single ALU so read after write.&lt;/p&gt;
+
+&lt;p&gt;Case 2:Conditional jumps are always hazardous they create conditional dependency in pipeline.&lt;/p&gt;
+
+&lt;p&gt;Case 3:This is write after read problem or concurrency dependency so hazardous&lt;/p&gt;
+
+&lt;p&gt;All the three are hazardous&lt;/p&gt;
+
+&lt;h5 id=&quot;a-micro-instruction-format-has-micro-ops-field-which-is-divided-into-three-subfields-f1-f2-f3-each-having-seven-distinct-micro-operations-condition-field-cd-for-four-status-bits-branch-field-br-having-four-options-used-in-conjunction-with-address-field-adf-the-address-space-is-of-128-memory-locations-the-size-of-micro-instruction-is&quot;&gt;A micro-instruction format has micro-ops field which is divided into three subfields F1, F2, F3 each having seven distinct micro-operations, condition field CD for four status bits, branch field BR having four options used in conjunction with address field ADF. The address space is of 128 memory locations. The size of micro-instruction is?&lt;/h5&gt;
+&lt;p&gt;The size of micro-instruction is:
+a.17
+b.20
+C.24
+D.32
+Microprocessor instruction format, which is divided into three subfields F1, F2, F3 each having seven distinct micro-operations, condition field CD for four status bits, branch field BR having four options used in conjunction with address field ADF. The address space is of 128 memory locations.ie: q8 F1,F2,F3 each having seven distinct micro-operation. So, 3 bits are required for each. Condition field have four status, it needs 2 bits for four different condition. Branch field have four option so,it needs 2 bits for four option. Now there are 128 different memory location, So, there 7 bits atre required for 128 diffeent location. Instruction Field: q8 (1) Total bits are 20. So, option (B) is correct.&lt;/p&gt;
+
+&lt;p&gt;Main components of memory tube display are:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Flood gun
+Primary gun
+Writing Beam
+Collector
+Storage grid
+Screen
+Focussing &amp;amp; deflection system
+Flood electron
+Ground or base
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Only Liquid crystal is not enlisted here and it is not the display component in memory tube&lt;/p&gt;
+
+&lt;h5 id=&quot;a-32---bit-wide-main-memory-unit-with-a-capacity-of-1-gb-is-built-using-256m-x-4-bit-dram-chips-the-number-of-rows-of-memory-cells-in-the-dram-chip-is-214-the-time-taken-to-perform-one-refresh-operation-is-50-nanoseconds-the-refresh-period-is-2-milliseconds-the-percentage-rounded-to-the-closet-integer-of-the-time-available-for-performing-the-memory-readwrite-operations-in-the-main-memory-unit-is-___&quot;&gt;A 32 - bit wide main memory unit with a capacity of 1 GB is built using 256M X 4-bit DRAM chips. The number of rows of memory cells in the DRAM chip is 214. The time taken to perform one refresh operation is 50 nanoseconds. The refresh period is 2 milliseconds. The percentage (rounded to the closet integer) of the time available for performing the memory read/write operations in the main memory unit is &lt;strong&gt;__&lt;/strong&gt;_&lt;/h5&gt;
+
+&lt;p&gt;Given, total number of rows is 214 and time taken to perform one refresh operation is 50 nanoseconds. So, total time taken to perform refresh operation = 214*50 nanoseconds = 819200 nanoseconds = 0.819200 milliseconds. But refresh period is 2 milliseconds. So, time spent in refresh period in percentage = (0.819200 milliseconds) / (2 milliseconds) = 0.4096 = 40.96% Hence, time spent in read/write operation = 100% - 40.96% = 59.04% = 59 (in percentage and rounded to the closet integer). So, answer is 59.&lt;/p&gt;
+
+&lt;p&gt;#####&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The RISC design philosophy generally incorporates a larger number of registers to prevent in large amounts of interactions with memory.
+The decision of RISC processor designers to provide simple addressing modes leads to uniform length instructions, so RISC instruction is of uniform fixed length.
+In the hardwired control unit, the control units use fixed logic circuits to interpret instructions and generate control signals from them. It is significantly faster than its counterpart but is rather inflexible. Most of the RISC processors are based on the hardwired control unit design approach.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;a-processor-has-16-integer-registers-r0-r1---r15-and-64-floating-point-registers-f0-f1---f63-it-uses-a-2-byte-instruction-format-there-are-four-categories-of-instructions-type-1-type-2-type-3-and-type-4-type-1-category-consists-of-four-instructions-each-with-3-integer-register-operands-3rs-type-2-category-consists-of-eight-instructions-each-with-2-floating-point-register-operands-2fs-type-3-category-consists-of-fourteen-instructions-each-with-one-integer-register-operand-and-one-floating-point-register-operand-1r1f-type-4-category-consists-of-n-instructions-each-with-a-floating-point-register-operand-1f-the-maximum-value-of-n-is-___--note--this-was-numerical-type-question&quot;&gt;A processor has 16 integer registers (R0, R1, … , R15) and 64 floating point registers (F0, F1, … , F63). It uses a 2-byte instruction format. There are four categories of instructions: Type-1, Type-2, Type-3, and Type 4. Type-1 category consists of four instructions, each with 3 integer register operands (3Rs). Type-2 category consists of eight instructions, each with 2 floating point register operands (2Fs). Type-3 category consists of fourteen instructions, each with one integer register operand and one floating point register operand (1R+1F). Type-4 category consists of N instructions, each with a floating point register operand (1F). The maximum value of N is &lt;strong&gt;__&lt;/strong&gt;_ . Note -This was Numerical Type question&lt;/h5&gt;
+
+&lt;h5 id=&quot;in-distributed-system-the-capacity-of-a-system-to-adapt-the-increased-service-load-is-called-____-&quot;&gt;In Distributed system, the capacity of a system to adapt the increased service load is called &lt;strong&gt;__&lt;/strong&gt;&lt;em&gt;__&lt;/em&gt; .&lt;/h5&gt;
+&lt;p&gt;Scalability
+till  page no 14 
+https://www.geeksforgeeks.org/computer-organization-and-architecture-gq/&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">DLD Imp notes According to Amdahl’s law speed up for infinite number of process:</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Network Importent notes</title><link href="/net-imp-notes/" rel="alternate" type="text/html" title="Network Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/net-imp-notes</id><content type="html" xml:base="/net-imp-notes/">&lt;h1 id=&quot;computer-network&quot;&gt;Computer Network&lt;/h1&gt;
+&lt;p&gt;Range of Private IP&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;10.0.0.0 - 10.255.255.255&lt;/li&gt;
+  &lt;li&gt;172.16.0.0 - 172.31.255.255&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;192.168.0.0 - 192.168.255.255&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In multi-programmed systems, it is advantageous if some programs such as editors and compilers can be shared by several users. Which of the following must be true of multi-programmed systems in order that a single copy of a program can be shared by several users? I. The program is a macro II. The program is recursive III. The program is reentran.
+#####Question 34 Explanation:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Reentrant code is commonly required in operating systems and in applications intended to be shared in multi-use systems. A programmer writes a reentrant program by making sure that no instructions modify the contents of variable values in other instructions within the program. Each time the program is entered for a user, a data area is obtained which keep all the variable values for that user. The data area is in another part of memory from the program itself. When the program is interrupted to give another user a turn to use the program, information about the data area associated with that user is saved. When the interrupted user of the program is once again given control of the program, information in the saved data area is recovered and the program can be reentered without concern that the previous user has changed some instruction within the program. The program is recursive is correct.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Which of the following comment about peep-hole optimization is true?
+It is applied to small part of the code and applied repeatedly,&lt;a href=&quot;https://www.geeksforgeeks.org/peephole-optimization-in-compiler-design/&quot;&gt;Peep-hole optimization&lt;/a&gt; is a type of optimization technique which is applied to small part of the code called as ‘peep’ and Peephole optimization involves the changing in small set of instructions to an equivalent set of instruction that gives the better performance compare to other optimization technique and applied repeatedly.&lt;/li&gt;
+  &lt;li&gt;Consider the code segment
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int i, j, x, y, m, n;
+ n=20;
+ for (i = 0, i &amp;lt; n; i++)
+{
+  for (j = 0; j &amp;lt; n; j++)
+   {
+      if (i % 2)
+      {
+       x + = ((4*j) + 5*i);
+       y += (7 + 4*j);
+      }
+   }
+}
+m = x + y;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;The code contains loop invariant computation&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;There is scope of common sub-expression elimination in this code&lt;/li&gt;
+  &lt;li&gt;There is scope of strength reduction in this code&lt;/li&gt;
+  &lt;li&gt;There is scope of dead code elimination in this code
+    &lt;h5 id=&quot;answer&quot;&gt;Answer:&lt;/h5&gt;
+    &lt;p&gt;There is scope of dead code elimination in this code
+. in dead code elimination technique it removes the dead code as name suggested. The statements of code is called dead code in which code is either never executes or unreachable or their output is never used are eliminated but here is not such type of statements or code. Here we reduce the strength reduction as replacing the “ 4 * j with 4 « j “ and code has common sub-expression as well as loop invariant computations.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Peephole optimization is form of Local optimization.
+    &lt;h5 id=&quot;answer-1&quot;&gt;Answer:&lt;/h5&gt;
+    &lt;p&gt;```
+In the optimisation technique, we optimise the code during compilation which reduces the space complexity as well as time complexity and eliminate the redundant code.Peephole optimization one of the optimisation technique which performed on a small set of compiler-generated instructions and the small set is known as the peephole or window. &lt;a href=&quot;https://www.geeksforgeeks.org/peephole-optimization-in-compiler-design/&quot;&gt;Peephole optimization&lt;/a&gt; does change the small set of instructions to the other an equivalent set which has better performance.:- For example :-&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Peephole optimization technique would remove both instructions push and pop operation on stack instead of pushing register A onto the stack and then immediately popping the value back into register A&lt;/li&gt;
+  &lt;li&gt;Peephole optimization technique might do an arithmetic shift left Instead of adding A to A.&lt;/li&gt;
+  &lt;li&gt;Peephole optimization technique might scale the floating point register’s exponent by 3 Instead of multiplying a floating point register by 8.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The main objective of peephole optimization is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To improve performance&lt;/li&gt;
+  &lt;li&gt;To reduce memory footprint&lt;/li&gt;
+  &lt;li&gt;To reduce code size
+```&lt;/li&gt;
+  &lt;li&gt;In compiler terminology reduction in strength means
+    &lt;h4 id=&quot;replacing-a-costly-operation-by-a-relatively-cheaper-one&quot;&gt;replacing a costly operation by a relatively cheaper one.&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The use of multiple register windows with overlap causes a reduction in the number of memory accesses for I. Function locals and parameters II. Register saves and restores III. Instruction fetches
+    &lt;h4 id=&quot;needed-study&quot;&gt;needed study&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The expression &lt;em&gt;(a*b)* c&lt;/em&gt; op…….. where ‘op’ is one of ‘&lt;strong&gt;+&lt;/strong&gt;’, ‘&lt;strong&gt;***’ and ‘&lt;/strong&gt;↑**’ (exponentiation) can be evaluated on a CPU with a single register without storing the value of &lt;em&gt;(a * b)&lt;/em&gt; if
+    &lt;h4 id=&quot;given-expression-is--&quot;&gt;Given expression is :-&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(a&lt;em&gt;b)&lt;/em&gt; c op&lt;/p&gt;
+
+&lt;p&gt;Here op is one of the ‘+’, ‘&lt;em&gt;’ and ‘↑’ (exponentiation). (a&lt;/em&gt; b)* having high precedence so it will evaluate first in CPU register. But we have given one single register as we cannot store any value from reg to memory. Now ( a * b ) is evaluated in register R and precedence order is ( ↑ , * or / , + or – ). If we put op as (a&lt;em&gt;b)&lt;/em&gt; c op ‘ ↑ ‘ then expression becomes as (a&lt;em&gt;b)&lt;/em&gt; c ↑ d here c ↑ d will evaluate first. But we have not extra register to evaluate ( a * b ). Therefore we cannot put any operator having precedence greater than ” * ”. Hence, Operator is either ” + ” or “- ” .&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;introduction-of-assembler&quot;&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/introduction-of-assembler/&quot;&gt;Introduction of Assembler&lt;/a&gt;&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Pass-1:&lt;/strong&gt;
+        &lt;ol&gt;
+          &lt;li&gt;Define symbols and literals and remember them in symbol table and literal table respectively.&lt;/li&gt;
+          &lt;li&gt;Keep track of location counter&lt;/li&gt;
+          &lt;li&gt;Process pseudo-operations&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pass-2:&lt;/strong&gt;
+    &lt;ol&gt;
+      &lt;li&gt;Generate object code by converting symbolic op-code into respective numeric op-code&lt;/li&gt;
+      &lt;li&gt;Generate data for literals and look for values of symbols.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;lexical analyser uses finite autometa so it uses regular grammer. whose expression will be for example letter(letter + digit )* , where as syntax tree uses context free grammer which uses pda.&lt;/li&gt;
+  &lt;li&gt;In operator grammar production rules which have two adjacent non-terminals on right hand side are not allowed. Additionally empty production rules are also not allowed. So, A → BC and A → ε are not allowed.&lt;/li&gt;
+  &lt;li&gt;YACC is the standard parser generator for Unix operating system. It is used as a parser in C programming language. It stands for Yet Another Compiler Compiler.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Which of the following productions eliminate left recursion in the productions given below: S → Aa&lt;/td&gt;
+          &lt;td&gt;b A → Ac&lt;/td&gt;
+          &lt;td&gt;Sd&lt;/td&gt;
+          &lt;td&gt;ε&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → bdA’ A’ → A’c&lt;/td&gt;
+      &lt;td&gt;A’ba&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → A’&lt;/td&gt;
+      &lt;td&gt;bdA’, A’ → cA’&lt;/td&gt;
+      &lt;td&gt;adA’&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;C&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → A’c&lt;/td&gt;
+      &lt;td&gt;A’d A’ → bdA’&lt;/td&gt;
+      &lt;td&gt;cA&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;D&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → cA’&lt;/td&gt;
+      &lt;td&gt;adA’&lt;/td&gt;
+      &lt;td&gt;bdA’ A’ → A&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/parsing-and-syntax-directed-translation-gq/&quot;&gt;Parsing and Syntax directed translation&lt;/a&gt;&lt;/strong&gt; &lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/isro-cs-2013/&quot;&gt;ISRO CS 2013&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/isro-isro-cs-2013-question-6/&quot;&gt;Discuss it&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Question 67 Explanation:&lt;/p&gt;
+
+&lt;p&gt;To remove left recursion from the grammar of the
+form :  A → Aα | β
+We rewrite the production rules as:
+           A → βA’
+           A’→ αA’| ε&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Given Grammar: S → Aa&lt;/td&gt;
+      &lt;td&gt;b&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;A → Ac&lt;/td&gt;
+      &lt;td&gt;Sd&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;after finding indirect left recursion, grammar:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;           S → Aa | b
+           A → Ac | Aad | bd | ε
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;here, α = c, ad, β = bd&lt;/p&gt;
+
+&lt;p&gt;So, Grammar after removing left recursion = 
+               S → Aa | b
+               A → A’ | bdA’
+               A’→ CA’| ada’| ε&lt;/p&gt;
+
+&lt;p&gt;So, option (B) is correct.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Operator stack is used for converting infix to postfix expression such that operators like as +, *, (, ), / are pushed in stack where as operand stack is used for converting Postfix to Prefix evaluation such that operands are 7,2,1,2 etc.&lt;/li&gt;
+  &lt;li&gt;A lexical analyzer uses the following patterns to recognize three tokens T1, T2, and T3 over the alphabet {a,b,c}. T1: a?(b∣c)&lt;em&gt;a T2: b?(a∣c)&lt;/em&gt;b T3: c?(b∣a)*c Note that ‘x?’ means 0 or 1 occurrence of the symbol x. Note also that the analyzer outputs the token that matches the longest possible prefix. If the string &lt;em&gt;bbaacabc&lt;/em&gt; is processes by the analyzer, which one of the following is the sequence of tokens it outputs?&lt;/li&gt;
+  &lt;li&gt;A: T1T2T3
+B: T1T1T3
+C: T2T1T3
+D:T3T3
+    &lt;h4 id=&quot;explanation&quot;&gt;Explanation:&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;0 or 1 occurrence of the symbol x. T1 : (b+c)* a + a(b+c)* a T2 : (a+c)* b + b(a+c)* b T3 : (b+a)* c + c(b+a)* c Given String : bbaacabc Longest matching prefix is “ &lt;strong&gt;bbaac&lt;/strong&gt; “ &lt;em&gt;(Which can be generated by &lt;strong&gt;T3&lt;/strong&gt;)&lt;/em&gt; The remaining part (after Prefix) “abc” &lt;em&gt;(Can be generated by &lt;strong&gt;T3&lt;/strong&gt;)&lt;/em&gt; So, the answer is &lt;strong&gt;T3T3&lt;/strong&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">Computer Network Range of Private IP 10.0.0.0 - 10.255.255.255 172.16.0.0 - 172.31.255.255 192.168.0.0 - 192.168.255.255</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">OS Importent notes</title><link href="/os-imp-notes/" rel="alternate" type="text/html" title="OS Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/os-imp-notes</id><content type="html" xml:base="/os-imp-notes/">&lt;h1 id=&quot;os&quot;&gt;OS&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;read about &lt;strong&gt;polled I/O&lt;/strong&gt; or &lt;strong&gt;software-driven I/O&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We describe a protocol of input device communication below. a. Each device has a distinct address b. The bus controller scans each device in sequence of increasing address value to determine if the entity wishes to communicate. c. The device ready to communicate leaves it data in IO register. d. The data is picked up and the controller moves to step-a above. Identify the form of communication best describes the IO mode amongst the following?
+    &lt;h5 id=&quot;answer-polling&quot;&gt;answer: polling&lt;/h5&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Consider a hard disk with 16 recording surfaces (0-15) having 16384 cylinders (0-16383) and each cylinder contains 64 sectors (0-63). Data storage capacity in each sector is 512 bytes. Data are organized cylinder-wise and the addressing format is
+    &lt;h5 id=&quot;explain&quot;&gt;Explain&lt;/h5&gt;
+    &lt;p&gt;First convert ⟨1200,9,40⟩ into sector address.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(1200×16×64)+(9×64)+40=1229416&lt;/p&gt;
+
+&lt;p&gt;Number of sectors to store file =(42797  KB)/512=85594&lt;/p&gt;
+
+&lt;p&gt;Last sector to store file =1229416+85594=1315010&lt;/p&gt;
+
+&lt;p&gt;Now, do reverse engineering,&lt;/p&gt;
+
+&lt;p&gt;1315010/(16×64)=1284.189453 (1284 will be cylinder number and remaining sectors =194)&lt;/p&gt;
+
+&lt;p&gt;194/64=3.03125 (3 is surface number and remaining sectors are 2)&lt;/p&gt;
+
+&lt;p&gt;∴⟨1284,3,1⟩ is last sector address.
+&lt;a href=&quot;https://gateoverflow.in/1337/gate2009-51&quot;&gt;Concept&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A file system with 300 GByte disk uses a file descriptor with 8 direct block addresses, 1 indirect block address and 1 doubly indirect block address. The size of each disk block is 128 Bytes and the size of each disk block address is 8 Bytes. The maximum possible file size in this file system is?
+    &lt;h5 id=&quot;expain&quot;&gt;Expain:&lt;/h5&gt;
+    &lt;p&gt;&lt;strong&gt;The question in simple words&lt;/strong&gt;- A 300GB disk has indexing in which 8 direct block addresses are present, 1 single indirect block(means it points to the address of a disk block in which 128/8=16 more addresses are stored which further stores data ), and 1 doubly indirect address is present. so using this file decryptor what is the max. possible size of a file possible that can be supported by this file system.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Direct block addressing will point to 8 disk blocks =8×128  B=1  KB&lt;/p&gt;
+
+&lt;p&gt;Singly Indirect block addressing will point to 1 disk block which has 128/8 disc block addresses =(128/8)×128  B=2  KB&lt;/p&gt;
+
+&lt;p&gt;Doubly indirect block addressing will point to 1 disk block which has 128/8 addresses to disk blocks which in turn has 128/8 addresses to disk blocks =16×16×128  B=32  KB&lt;/p&gt;
+
+&lt;p&gt;Total =35  KB&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;An application loads 100 libraries at startup. Loading each library requires exactly one disk access. The seek time of the disk to a random location is given as 10 ms. Rotational speed of disk is 6000 rpm. If all 100 libraries are loaded from random locations on the disk, how long does it take to load all libraries? (The time to transfer data from the disk block once the head has been positioned at the start of the block may be neglected.)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;average rotation latency = (1/2)× rotation time Disk access time=Seek
+time+Rotational latency+Transfer time (given that transfer time is
+neglected)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;##### explain:
+Seek time=10 ms&lt;br /&gt;
+Rotational speed=6000 rpm&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;60s→6000 rotations&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;1 rotation→60/6000s&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Rotational latency=1/2×60/6000s=5 ms&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Total time to transfer one library =10+5=15 ms&lt;/p&gt;
+
+&lt;p&gt;∴ Total time to transfer 100 libraries =100×15 ms=1.5s&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The data blocks of a very large file in the Unix file system are allocated using?
+    &lt;h5 id=&quot;the-unix-file-system-uses-an-extension-of-indexed-allocation-it-uses-direct-blocks-single-indirect-blocks-double-indirect-blocks-and-triple-indirect-blocks-following-diagram-shows-implementation-of-unix-file-system-the-diagram-is-taken-from-operating-system-concept-book&quot;&gt;The Unix file system uses an extension of indexed allocation. It uses direct blocks, single indirect blocks, double indirect blocks and triple indirect blocks. Following diagram shows implementation of Unix file system. The diagram is taken from &lt;a href=&quot;http://codex.cs.yale.edu/avi/os-book/OS8/os8j/slide-dir/index.html&quot;&gt;Operating System Concept&lt;/a&gt; book&lt;/h5&gt;
+    &lt;p&gt;&lt;img src=&quot;https://contribute.geeksforgeeks.org/wp-content/uploads/gate20.jpg&quot; alt=&quot;GFG Unix large file&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Which of the following statements about synchronous and asynchronous I/O is NOT true?
+A. An ISR is invoked on completion of I/O in synchronous I/O but not in asynchronous I/O
+B. In both synchronous and asynchronous I/O, an ISR (Interrupt Service Routine) is invoked after completion of the I/O
+C. A process making a synchronous I/O call waits until I/O is complete, but a process making an asynchronous I/O call does not wait for completion of the I/O
+D. In the case of synchronous I/O, the process waiting for the completion of I/O is woken up by the ISR that is invoked after the completion of I/O
+&lt;strong&gt;B is false.&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">OS</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">crypto Importent notes</title><link href="/crypto-imp-notes/" rel="alternate" type="text/html" title="crypto Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/crypto-imp-notes</id><content type="html" xml:base="/crypto-imp-notes/">&lt;h4 id=&quot;des&quot;&gt;DES&lt;/h4&gt;
+&lt;ul&gt;
+  &lt;li&gt;Symittric key cryptography&lt;/li&gt;
+  &lt;li&gt;key-64 bit/128 bit&lt;/li&gt;
+  &lt;li&gt;block- 64 bit&lt;/li&gt;
+  &lt;li&gt;key 56 bit key lenght.&lt;/li&gt;
+  &lt;li&gt;replace by AES&lt;/li&gt;
+  &lt;li&gt;has 4x16 ‘s’ block&lt;/li&gt;
+  &lt;li&gt;Double DES- Meet in middle attack prone.&lt;/li&gt;
+  &lt;li&gt;Triple Des- 56x3=168 bit key size&lt;/li&gt;
+  &lt;li&gt;{both double and riple DES ueses 2 keys while encrypt/decrypt}&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;aes&quot;&gt;AES&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;key- 128/192/256 bit&lt;/li&gt;
+  &lt;li&gt;block size 128 bit&lt;/li&gt;
+  &lt;li&gt;uses feistal cipher&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;message-digest&quot;&gt;Message Digest&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;MD5,MD4-1, SHA-1 SHA-0/1/2 are&lt;/li&gt;
+  &lt;li&gt;MD5 —&amp;gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">DES Symittric key cryptography key-64 bit/128 bit block- 64 bit key 56 bit key lenght. replace by AES has 4x16 ‘s’ block Double DES- Meet in middle attack prone. Triple Des- 56x3=168 bit key size {both double and riple DES ueses 2 keys while encrypt/decrypt}</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Network Importent notes</title><link href="/net-imp-notes/" rel="alternate" type="text/html" title="Network Importent notes" /><published>2020-07-24T03:25:54+00:00</published><updated>2020-07-24T03:25:54+00:00</updated><id>/net-imp-notes</id><content type="html" xml:base="/net-imp-notes/">&lt;h1 id=&quot;computer-network&quot;&gt;Computer Network&lt;/h1&gt;
+&lt;p&gt;Range of Private IP&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;10.0.0.0 - 10.255.255.255&lt;/li&gt;
+  &lt;li&gt;172.16.0.0 - 172.31.255.255&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;192.168.0.0 - 192.168.255.255&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In multi-programmed systems, it is advantageous if some programs such as editors and compilers can be shared by several users. Which of the following must be true of multi-programmed systems in order that a single copy of a program can be shared by several users? I. The program is a macro II. The program is recursive III. The program is reentran.
+#####Question 34 Explanation:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Reentrant code is commonly required in operating systems and in applications intended to be shared in multi-use systems. A programmer writes a reentrant program by making sure that no instructions modify the contents of variable values in other instructions within the program. Each time the program is entered for a user, a data area is obtained which keep all the variable values for that user. The data area is in another part of memory from the program itself. When the program is interrupted to give another user a turn to use the program, information about the data area associated with that user is saved. When the interrupted user of the program is once again given control of the program, information in the saved data area is recovered and the program can be reentered without concern that the previous user has changed some instruction within the program. The program is recursive is correct.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Which of the following comment about peep-hole optimization is true?
+It is applied to small part of the code and applied repeatedly,&lt;a href=&quot;https://www.geeksforgeeks.org/peephole-optimization-in-compiler-design/&quot;&gt;Peep-hole optimization&lt;/a&gt; is a type of optimization technique which is applied to small part of the code called as ‘peep’ and Peephole optimization involves the changing in small set of instructions to an equivalent set of instruction that gives the better performance compare to other optimization technique and applied repeatedly.&lt;/li&gt;
+  &lt;li&gt;Consider the code segment
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;int i, j, x, y, m, n;
+ n=20;
+ for (i = 0, i &amp;lt; n; i++)
+{
+  for (j = 0; j &amp;lt; n; j++)
+   {
+      if (i % 2)
+      {
+       x + = ((4*j) + 5*i);
+       y += (7 + 4*j);
+      }
+   }
+}
+m = x + y;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;ul&gt;
+      &lt;li&gt;The code contains loop invariant computation&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;There is scope of common sub-expression elimination in this code&lt;/li&gt;
+  &lt;li&gt;There is scope of strength reduction in this code&lt;/li&gt;
+  &lt;li&gt;There is scope of dead code elimination in this code
+    &lt;h5 id=&quot;answer&quot;&gt;Answer:&lt;/h5&gt;
+    &lt;p&gt;There is scope of dead code elimination in this code
+. in dead code elimination technique it removes the dead code as name suggested. The statements of code is called dead code in which code is either never executes or unreachable or their output is never used are eliminated but here is not such type of statements or code. Here we reduce the strength reduction as replacing the “ 4 * j with 4 « j “ and code has common sub-expression as well as loop invariant computations.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Peephole optimization is form of Local optimization.
+    &lt;h5 id=&quot;answer-1&quot;&gt;Answer:&lt;/h5&gt;
+    &lt;p&gt;```
+In the optimisation technique, we optimise the code during compilation which reduces the space complexity as well as time complexity and eliminate the redundant code.Peephole optimization one of the optimisation technique which performed on a small set of compiler-generated instructions and the small set is known as the peephole or window. &lt;a href=&quot;https://www.geeksforgeeks.org/peephole-optimization-in-compiler-design/&quot;&gt;Peephole optimization&lt;/a&gt; does change the small set of instructions to the other an equivalent set which has better performance.:- For example :-&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Peephole optimization technique would remove both instructions push and pop operation on stack instead of pushing register A onto the stack and then immediately popping the value back into register A&lt;/li&gt;
+  &lt;li&gt;Peephole optimization technique might do an arithmetic shift left Instead of adding A to A.&lt;/li&gt;
+  &lt;li&gt;Peephole optimization technique might scale the floating point register’s exponent by 3 Instead of multiplying a floating point register by 8.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The main objective of peephole optimization is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To improve performance&lt;/li&gt;
+  &lt;li&gt;To reduce memory footprint&lt;/li&gt;
+  &lt;li&gt;To reduce code size
+```&lt;/li&gt;
+  &lt;li&gt;In compiler terminology reduction in strength means
+    &lt;h4 id=&quot;replacing-a-costly-operation-by-a-relatively-cheaper-one&quot;&gt;replacing a costly operation by a relatively cheaper one.&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The use of multiple register windows with overlap causes a reduction in the number of memory accesses for I. Function locals and parameters II. Register saves and restores III. Instruction fetches
+    &lt;h4 id=&quot;needed-study&quot;&gt;needed study&lt;/h4&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The expression &lt;em&gt;(a*b)* c&lt;/em&gt; op…….. where ‘op’ is one of ‘&lt;strong&gt;+&lt;/strong&gt;’, ‘&lt;strong&gt;***’ and ‘&lt;/strong&gt;↑**’ (exponentiation) can be evaluated on a CPU with a single register without storing the value of &lt;em&gt;(a * b)&lt;/em&gt; if
+    &lt;h4 id=&quot;given-expression-is--&quot;&gt;Given expression is :-&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(a&lt;em&gt;b)&lt;/em&gt; c op&lt;/p&gt;
+
+&lt;p&gt;Here op is one of the ‘+’, ‘&lt;em&gt;’ and ‘↑’ (exponentiation). (a&lt;/em&gt; b)* having high precedence so it will evaluate first in CPU register. But we have given one single register as we cannot store any value from reg to memory. Now ( a * b ) is evaluated in register R and precedence order is ( ↑ , * or / , + or – ). If we put op as (a&lt;em&gt;b)&lt;/em&gt; c op ‘ ↑ ‘ then expression becomes as (a&lt;em&gt;b)&lt;/em&gt; c ↑ d here c ↑ d will evaluate first. But we have not extra register to evaluate ( a * b ). Therefore we cannot put any operator having precedence greater than ” * ”. Hence, Operator is either ” + ” or “- ” .&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;h3 id=&quot;introduction-of-assembler&quot;&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/introduction-of-assembler/&quot;&gt;Introduction of Assembler&lt;/a&gt;&lt;/h3&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;Pass-1:&lt;/strong&gt;
+        &lt;ol&gt;
+          &lt;li&gt;Define symbols and literals and remember them in symbol table and literal table respectively.&lt;/li&gt;
+          &lt;li&gt;Keep track of location counter&lt;/li&gt;
+          &lt;li&gt;Process pseudo-operations&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Pass-2:&lt;/strong&gt;
+    &lt;ol&gt;
+      &lt;li&gt;Generate object code by converting symbolic op-code into respective numeric op-code&lt;/li&gt;
+      &lt;li&gt;Generate data for literals and look for values of symbols.&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;lexical analyser uses finite autometa so it uses regular grammer. whose expression will be for example letter(letter + digit )* , where as syntax tree uses context free grammer which uses pda.&lt;/li&gt;
+  &lt;li&gt;In operator grammar production rules which have two adjacent non-terminals on right hand side are not allowed. Additionally empty production rules are also not allowed. So, A → BC and A → ε are not allowed.&lt;/li&gt;
+  &lt;li&gt;YACC is the standard parser generator for Unix operating system. It is used as a parser in C programming language. It stands for Yet Another Compiler Compiler.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Which of the following productions eliminate left recursion in the productions given below: S → Aa&lt;/td&gt;
+          &lt;td&gt;b A → Ac&lt;/td&gt;
+          &lt;td&gt;Sd&lt;/td&gt;
+          &lt;td&gt;ε&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → bdA’ A’ → A’c&lt;/td&gt;
+      &lt;td&gt;A’ba&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → A’&lt;/td&gt;
+      &lt;td&gt;bdA’, A’ → cA’&lt;/td&gt;
+      &lt;td&gt;adA’&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;C&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → A’c&lt;/td&gt;
+      &lt;td&gt;A’d A’ → bdA’&lt;/td&gt;
+      &lt;td&gt;cA&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;D&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;S → Aa&lt;/td&gt;
+      &lt;td&gt;b A → cA’&lt;/td&gt;
+      &lt;td&gt;adA’&lt;/td&gt;
+      &lt;td&gt;bdA’ A’ → A&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/parsing-and-syntax-directed-translation-gq/&quot;&gt;Parsing and Syntax directed translation&lt;/a&gt;&lt;/strong&gt; &lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/isro-cs-2013/&quot;&gt;ISRO CS 2013&lt;/a&gt;&lt;/strong&gt;&lt;br /&gt;
+&lt;strong&gt;&lt;a href=&quot;https://www.geeksforgeeks.org/isro-isro-cs-2013-question-6/&quot;&gt;Discuss it&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Question 67 Explanation:&lt;/p&gt;
+
+&lt;p&gt;To remove left recursion from the grammar of the
+form :  A → Aα | β
+We rewrite the production rules as:
+           A → βA’
+           A’→ αA’| ε&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Given Grammar: S → Aa&lt;/td&gt;
+      &lt;td&gt;b&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;A → Ac&lt;/td&gt;
+      &lt;td&gt;Sd&lt;/td&gt;
+      &lt;td&gt;ε&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;after finding indirect left recursion, grammar:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;           S → Aa | b
+           A → Ac | Aad | bd | ε
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;here, α = c, ad, β = bd&lt;/p&gt;
+
+&lt;p&gt;So, Grammar after removing left recursion = 
+               S → Aa | b
+               A → A’ | bdA’
+               A’→ CA’| ada’| ε&lt;/p&gt;
+
+&lt;p&gt;So, option (B) is correct.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Operator stack is used for converting infix to postfix expression such that operators like as +, *, (, ), / are pushed in stack where as operand stack is used for converting Postfix to Prefix evaluation such that operands are 7,2,1,2 etc.&lt;/li&gt;
+  &lt;li&gt;A lexical analyzer uses the following patterns to recognize three tokens T1, T2, and T3 over the alphabet {a,b,c}. T1: a?(b∣c)&lt;em&gt;a T2: b?(a∣c)&lt;/em&gt;b T3: c?(b∣a)*c Note that ‘x?’ means 0 or 1 occurrence of the symbol x. Note also that the analyzer outputs the token that matches the longest possible prefix. If the string &lt;em&gt;bbaacabc&lt;/em&gt; is processes by the analyzer, which one of the following is the sequence of tokens it outputs?&lt;/li&gt;
+  &lt;li&gt;A: T1T2T3
+B: T1T1T3
+C: T2T1T3
+D:T3T3
+    &lt;h4 id=&quot;explanation&quot;&gt;Explanation:&lt;/h4&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;0 or 1 occurrence of the symbol x. T1 : (b+c)* a + a(b+c)* a T2 : (a+c)* b + b(a+c)* b T3 : (b+a)* c + c(b+a)* c Given String : bbaacabc Longest matching prefix is “ &lt;strong&gt;bbaac&lt;/strong&gt; “ &lt;em&gt;(Which can be generated by &lt;strong&gt;T3&lt;/strong&gt;)&lt;/em&gt; The remaining part (after Prefix) “abc” &lt;em&gt;(Can be generated by &lt;strong&gt;T3&lt;/strong&gt;)&lt;/em&gt; So, the answer is &lt;strong&gt;T3T3&lt;/strong&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><summary type="html">Computer Network Range of Private IP 10.0.0.0 - 10.255.255.255 172.16.0.0 - 172.31.255.255 192.168.0.0 - 192.168.255.255</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Powerful things you can do with the Markdown editor</title><link href="/powerful-things-markdown-editor/" rel="alternate" type="text/html" title="Powerful things you can do with the Markdown editor" /><published>2020-07-24T02:25:54+00:00</published><updated>2020-07-24T02:25:54+00:00</updated><id>/powerful-things-markdown-editor</id><content type="html" xml:base="/powerful-things-markdown-editor/">&lt;p&gt;There are lots of powerful things you can do with the Markdown editor&lt;/p&gt;
+
+&lt;p&gt;If you’ve gotten pretty comfortable with writing in Markdown, then you may enjoy some more advanced tips about the types of things you can do with Markdown!&lt;/p&gt;
+
+&lt;p&gt;As with the last post about the editor, you’ll want to be actually editing this post as you read it so that you can see all the Markdown code we’re using.&lt;/p&gt;
+
+&lt;h2 id=&quot;special-formatting&quot;&gt;Special formatting&lt;/h2&gt;
+
+&lt;p&gt;As well as bold and italics, you can also use some other special formatting in Markdown when the need arises, for example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;del&gt;strike through&lt;/del&gt;&lt;/li&gt;
+  &lt;li&gt;==highlight==&lt;/li&gt;
+  &lt;li&gt;*escaped characters*&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;writing-code-blocks&quot;&gt;Writing code blocks&lt;/h2&gt;
+
+&lt;p&gt;There are two types of code elements which can be inserted in Markdown, the first is inline, and the other is block. Inline code is formatted by wrapping any word or words in back-ticks, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;like this&lt;/code&gt;. Larger snippets of code can be displayed across multiple lines using triple back ticks:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.my-link {
+    text-decoration: underline;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to get really fancy, you can even add syntax highlighting using Rouge.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3.jpg&quot; alt=&quot;walking&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference-lists&quot;&gt;Reference lists&lt;/h2&gt;
+
+&lt;p&gt;The quick brown jumped over the lazy.&lt;/p&gt;
+
+&lt;p&gt;Another way to insert links in markdown is using reference lists. You might want to use this style of linking to cite reference material in a Wikipedia-style. All of the links are listed at the end of the document, so you can maintain full separation between content and its source or reference.&lt;/p&gt;
+
+&lt;h2 id=&quot;full-html&quot;&gt;Full HTML&lt;/h2&gt;
+
+&lt;p&gt;Perhaps the best part of Markdown is that you’re never limited to just Markdown. You can write HTML directly in the Markdown editor and it will just work as HTML usually does. No limits! Here’s a standard YouTube embed code as an example:&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe style=&quot;width:100%;&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><category term="featured" /><summary type="html">There are lots of powerful things you can do with the Markdown editor</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Powerful things you can do with the Markdown editor</title><link href="/powerful-things-markdown-editor/" rel="alternate" type="text/html" title="Powerful things you can do with the Markdown editor" /><published>2020-07-24T02:25:54+00:00</published><updated>2020-07-24T02:25:54+00:00</updated><id>/powerful-things-markdown-editor</id><content type="html" xml:base="/powerful-things-markdown-editor/">&lt;p&gt;There are lots of powerful things you can do with the Markdown editor&lt;/p&gt;
+
+&lt;p&gt;If you’ve gotten pretty comfortable with writing in Markdown, then you may enjoy some more advanced tips about the types of things you can do with Markdown!&lt;/p&gt;
+
+&lt;p&gt;As with the last post about the editor, you’ll want to be actually editing this post as you read it so that you can see all the Markdown code we’re using.&lt;/p&gt;
+
+&lt;h2 id=&quot;special-formatting&quot;&gt;Special formatting&lt;/h2&gt;
+
+&lt;p&gt;As well as bold and italics, you can also use some other special formatting in Markdown when the need arises, for example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;del&gt;strike through&lt;/del&gt;&lt;/li&gt;
+  &lt;li&gt;==highlight==&lt;/li&gt;
+  &lt;li&gt;*escaped characters*&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;writing-code-blocks&quot;&gt;Writing code blocks&lt;/h2&gt;
+
+&lt;p&gt;There are two types of code elements which can be inserted in Markdown, the first is inline, and the other is block. Inline code is formatted by wrapping any word or words in back-ticks, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;like this&lt;/code&gt;. Larger snippets of code can be displayed across multiple lines using triple back ticks:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.my-link {
+    text-decoration: underline;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you want to get really fancy, you can even add syntax highlighting using Rouge.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/3.jpg&quot; alt=&quot;walking&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reference-lists&quot;&gt;Reference lists&lt;/h2&gt;
+
+&lt;p&gt;The quick brown jumped over the lazy.&lt;/p&gt;
+
+&lt;p&gt;Another way to insert links in markdown is using reference lists. You might want to use this style of linking to cite reference material in a Wikipedia-style. All of the links are listed at the end of the document, so you can maintain full separation between content and its source or reference.&lt;/p&gt;
+
+&lt;h2 id=&quot;full-html&quot;&gt;Full HTML&lt;/h2&gt;
+
+&lt;p&gt;Perhaps the best part of Markdown is that you’re never limited to just Markdown. You can write HTML directly in the Markdown editor and it will just work as HTML usually does. No limits! Here’s a standard YouTube embed code as an example:&lt;/p&gt;
+
+&lt;p&gt;&lt;iframe style=&quot;width:100%;&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;amp;showinfo=0&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;&lt;/p&gt;</content><author><name>sal</name></author><category term="Jekyll" /><category term="tutorial" /><category term="featured" /><summary type="html">There are lots of powerful things you can do with the Markdown editor</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="/assets/images/4.jpg" /><media:content medium="image" url="/assets/images/4.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
