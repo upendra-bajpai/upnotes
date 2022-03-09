@@ -1,9 +1,9 @@
 # Site
-name: 'GeekyPanda'
+name: 'UpNotes'
 description: 'Learning never stops'
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
-baseurl: ''
+baseurl: '/upnotes'
 ganalytics: 'G-Y699GMLWNL'
 disqus: 'geekypandaml'
 email: 'supernovaplazma@gmail.com'
@@ -77,24 +77,24 @@ paginate: 10
 #multiple pagination
 paginate_multiple:
   - paginate: 10
-    paginate_path: '/analytica_ml/page:num/'
-    sub_dir: '/analytics'
+    paginate_path: '/langs/page:num/'
+    sub_dir: '/Langs'
 
   - paginate: 10
     paginate_path: '/programming/page:num/'
-    sub_dir: '/programming'
+    sub_dir: '/DSA'
 
   - paginate: 10
-    paginate_path: '/business/page:num/'
-    sub_dir: '/ideas'
+    paginate_path: '/android/page:num/'
+    sub_dir: '/Android'
 
   - paginate: 10
-    paginate_path: '/science_tech/page:num/'
-    sub_dir: '/science'
+    paginate_path: '/flutter/page:num/'
+    sub_dir: '/Flutter'
 
   - paginate: 10
-    paginate_path: '/morning_coffie/page:num/'
-    sub_dir: '/fungeeks'
+    paginate_path: '/system_design/page:num/'
+    sub_dir: '/SD'
 
 plugins_dir: ./_plugins
 

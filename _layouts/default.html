@@ -12,7 +12,11 @@
  <!-- Jquery on header to make sure everything works, the rest  of the scripts in footer for fast loading -->
     <script
     src="{{site.baseurl}}/assets/js/jquery-3.3.1.min.js" async=""></script>
-   
+
+    <script src="{{site.baseurl}}/assets/js/bootstrap.min.js.map" async=""></script>
+
+    <script src="{{site.baseurl}}/assets/js/theme.js"></script>
+    <script src="{{site.baseurl}}/assets/js/popper.min.js.map.js" async=""></script>
     {% if jekyll.environment == 'production' %}
     {% include tracking-header.html %}
     {% endif %}
@@ -93,11 +97,8 @@
    <!--  {% include tracking-footer.html %} -->
 
    <!-- Scripts: popper, bootstrap, theme, lunr -->
-    <script src="{{site.baseurl}}/assets/js/popper.min.js.map.js" async=""></script>
 
-    <script src="{{site.baseurl}}/assets/js/bootstrap.min.js.map" async=""></script>
 
-    <script src="{{site.baseurl}}/assets/js/theme.js"></script>
 
 </body>
 
