@@ -3,7 +3,7 @@ name: Build and Deploy to Github Pages
 on:
   push:
     branches:
-      - release # Here source code branch is `release`, it could be other branch
+      - relese # Here source code branch is `release`, it could be other branch
 
 jobs:
   build_and_deploy:
