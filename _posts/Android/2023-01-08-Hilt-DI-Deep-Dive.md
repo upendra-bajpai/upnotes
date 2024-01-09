@@ -8,7 +8,7 @@ author: sal
 
 date: 2020-07-24-02:25:54
 
-categories: [ Android ]
+categories: [ Android,DI ]
 
 image: assets/images/4.jpg
 
@@ -153,6 +153,6 @@ There are three ways to define a binding in Hilt.
 
 referance post [medium post](https://medium.com/androiddevelopers/a-pragmatic-guide-to-hilt-with-kotlin-a76859c324a1)
 
-![Cheat Sheet](/assets/images/hiltflow.webp "Title")
+![Cheat Sheet](/upnotes/assets/images/hiltflow.webp "Title")
 
 <!-- <p><iframe  style="width:100%;"  height="315"  src="https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;showinfo=0"  frameborder="0"  allowfullscreen></iframe></p> -->
