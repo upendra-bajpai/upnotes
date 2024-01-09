@@ -1,0 +1,166 @@
+I"1<div class="container">
+    
+    
+    
+<!-- Begin post excerpts, let's highlight the first 4 posts on top -->
+<div class="row remove-site-content-margin">
+    
+    <!-- latest post -->
+    
+    <div class="col-md-6">
+    <div class="card border-0 mb-4 box-shadow">   
+    <a href="/upnotes/net-imp-notes/">
+    <div class="topfirstimage" style="background-image: url( /upnotes/assets/images/4.jpg); height: 200px;    background-size: cover;    background-repeat: no-repeat;"></div>     
+    </a>
+    <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+    <h2 class="h4 font-weight-bold">
+    <a class="text-dark" href="/upnotes/net-imp-notes/">Network Importent notes</a>
+    </h2>
+    <p class="excerpt">
+        Computer NetworkRange of Private IP  10.0.0.0 - 10.255.255.255  172.16.0.0 - 172.31.255.255  192.168.0.0 - 192.168.255.255
+    </p>
+    <div>
+        <small class="d-block text-muted">
+            In <span class="catlist">
+                
+                <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#jekyll">Jekyll</a><span class="sep">, </span>
+                
+                <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#tutorial">tutorial</a><span class="sep">, </span>
+                
+                </span>                   
+        </small>
+        <small class="text-muted">
+            Jul 24, 2020
+        </small>
+    </div>
+    </div>
+    </div>
+    </div>
+    
+    <div class="col-md-6">
+        
+        <!-- second latest post --><div class="mb-3 d-flex align-items-center">                
+                                
+                <div>
+                    <h2 class="mb-2 h6 font-weight-bold">
+                    <a class="text-dark" href="/upnotes"></a>
+                    </h2>
+                    <small class="d-block text-muted">
+                        In <span class="catlist">
+                        
+                        </span>                   
+                    </small>
+                    <small class="text-muted">
+                        
+                    </small>
+                </div>
+            </div>
+        
+        <!-- third latest post --><div class="mb-3 d-flex align-items-center">                
+                                
+                <div>
+                    <h2 class="mb-2 h6 font-weight-bold">
+                    <a class="text-dark" href="/upnotes"></a>
+                    </h2>
+                    <small class="d-block text-muted">
+                        In <span class="catlist">
+                        
+                        </span>                   
+                    </small>
+                    <small class="text-muted">
+                        
+                    </small>
+                </div>
+            </div>
+        
+        <!-- fourth latest post --><div class="mb-3 d-flex align-items-center">                
+                                
+                <div>
+                    <h2 class="mb-2 h6 font-weight-bold">
+                    <a class="text-dark" href="/upnotes"></a>
+                    </h2>
+                    <small class="d-block text-muted">
+                        In <span class="catlist">
+                        
+                        </span>                   
+                    </small>
+                    <small class="text-muted">
+                        
+                    </small>
+                </div>
+            </div>
+        
+    </div>
+    
+</div>
+
+    
+
+
+<!-- Now the rest of the posts with the usual loop but with an offset:4 on the first page so we can skeep the first 4 posts displayed above -->
+    
+<div class="row mt-3">
+   
+    <div class="col-md-8 main-loop">
+        
+        <h4 class="font-weight-bold spanborder"><span>All Stories</span></h4>
+        
+
+        
+        
+        <div class="mt-5">
+         <!-- Pagination links -->
+                  
+        </div>
+        
+    </div>
+    
+    <div class="col-md-4">
+        <div class="sticky-top sticky-top-offset">
+    <h4 class="font-weight-bold spanborder"><span>Featured</span></h4>  
+    <ol class="list-featured">				
+                        
+            <li class="mb-4">
+            <span>
+                <h6 class="font-weight-bold">
+                    <a href="/upnotes/powerful-things-markdown-editor/" class="text-dark">Powerful things you can do with the Markdown editor</a>
+                </h6>
+                <span class="d-block text-muted">
+                    In <span class="catlist">
+                    
+                    <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#jekyll">Jekyll</a><span class="sep">, </span>
+                    
+                    <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#tutorial">tutorial</a><span class="sep">, </span>
+                    
+                    </span>
+                </span>
+            </span>
+            </li>                
+                        
+            <li class="mb-4">
+            <span>
+                <h6 class="font-weight-bold">
+                    <a href="/upnotes/powerful-things-markdown-editor/" class="text-dark">Powerful things you can do with the Markdown editor</a>
+                </h6>
+                <span class="d-block text-muted">
+                    In <span class="catlist">
+                    
+                    <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#jekyll">Jekyll</a><span class="sep">, </span>
+                    
+                    <a class="text-capitalize text-muted smoothscroll" href="/upnotes/categories.html#tutorial">tutorial</a><span class="sep">, </span>
+                    
+                    </span>
+                </span>
+            </span>
+            </li>                
+           
+    </ol>
+</div>     
+    </div>
+    
+</div>
+
+
+
+</div>
+:ET
