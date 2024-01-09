@@ -15,7 +15,6 @@ image: assets/images/4.jpg
 tags: [featured]
 
 ---
-# Quick start
 
 All apps that use Hilt must contain an Application class that is annotated with  `@HiltAndroidApp`  since it triggers Hilt’s code generation at compile time. And for Hilt to be able to inject dependencies into an activity, the activity needs to be annotated with  `@AndroidEntryPoint`.
 
@@ -154,5 +153,6 @@ There are three ways to define a binding in Hilt.
 
 referance post [medium post](https://medium.com/androiddevelopers/a-pragmatic-guide-to-hilt-with-kotlin-a76859c324a1)
 
-![Cheat Sheet](I/upnotes/assets/images/hiltflow.webp "Title")
-<p><iframe  style="width:100%;"  height="315"  src="https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;showinfo=0"  frameborder="0"  allowfullscreen></iframe></p>
+![Cheat Sheet](/assets/images/hiltflow.webp "Title")
+
+<!-- <p><iframe  style="width:100%;"  height="315"  src="https://www.youtube.com/embed/Cniqsc9QfDo?rel=0&amp;showinfo=0"  frameborder="0"  allowfullscreen></iframe></p> -->

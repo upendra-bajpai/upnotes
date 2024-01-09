@@ -3,7 +3,7 @@ name: 'UpNotes'
 description: 'Learning never stops'
 logo: 'assets/images/logo.png'
 favicon: 'assets/images/favicon.ico'
-baseurl: ''
+baseurl: '/upnotes'
 ganalytics: 'G-Y699GMLWNL'
 disqus: 'geekypandaml'
 email: 'supernovaplazma@gmail.com'
@@ -50,7 +50,7 @@ defaults:
     values:
       layout: post
       author: sal
-      avatar: upnotes/assets/images/avatar1.jpg
+      avatar: /assets/images/avatar1.jpg
       
   # all pages
   - scope:
@@ -77,23 +77,23 @@ paginate: 10
 #multiple pagination
 paginate_multiple:
   - paginate: 10
-    paginate_path: 'upnotes/langs/page:num/'
+    paginate_path: '/langs/page:num/'
     sub_dir: '/Langs'
 
   - paginate: 10
-    paginate_path: 'upnotes/programming/page:num/'
+    paginate_path: '/programming/page:num/'
     sub_dir: '/DSA'
 
   - paginate: 10
-    paginate_path: 'upnotes/android/page:num/'
+    paginate_path: '/android/page:num/'
     sub_dir: '/Android'
 
   - paginate: 10
-    paginate_path: 'upnotes/flutter/page:num/'
+    paginate_path: '/flutter/page:num/'
     sub_dir: '/Flutter'
 
   - paginate: 10
-    paginate_path: 'upnotes/system_design/page:num/'
+    paginate_path: '/system_design/page:num/'
     sub_dir: '/SD'
 
 plugins_dir: ./_plugins
