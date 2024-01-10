@@ -85,8 +85,8 @@ paginate_multiple:
     sub_dir: '/DSA'
 
   - paginate: 10
-    paginate_path: 'upnotes/android/page:num/'
-    sub_dir: '/Android'
+    paginate_path: '/android/page:num/'
+    sub_dir: '/upnotes/Android'
 
   - paginate: 10
     paginate_path: '/flutter/page:num/'
