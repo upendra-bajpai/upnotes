@@ -6,7 +6,7 @@ favicon: 'assets/images/favicon.ico'
 baseurl: '/upnotes'
 ganalytics: 'G-Y699GMLWNL'
 disqus: 'geekypandaml'
-email: 'supernovaplazma@gmail.com'
+email: 'tronsamtron@yandex.com'
 mailchimp-list: 'https://geekypanda.us17.list-manage.com/subscribe/post?u=5de9558caf21ac2e9970bc459&amp;id=5a179d8608'
 
 include: ["_pages"]
@@ -86,7 +86,7 @@ paginate_multiple:
 
   - paginate: 10
     paginate_path: '/android/page:num/'
-    sub_dir: '/upnotes/Android'
+    sub_dir: '/Android'
 
   - paginate: 10
     paginate_path: '/flutter/page:num/'

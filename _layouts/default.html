@@ -12,11 +12,13 @@
  <!-- Jquery on header to make sure everything works, the rest  of the scripts in footer for fast loading -->
     <script
     src="{{site.baseurl}}/assets/js/jquery-3.3.1.min.js" async=""></script>
-    <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.44/darkreader.js" async=""></script>
+    <script src="{{site.baseurl}}/assets/js/darkreader.js" async=""></script>
     <script src="{{site.baseurl}}/assets/js/bootstrap.min.js.map" async=""></script>
 
     <script src="{{site.baseurl}}/assets/js/theme.js"></script>
     <script src="{{site.baseurl}}/assets/js/popper.min.js.map.js" async=""></script>
+    <script src="{{site.baseurl}}/assets/js/darkmode.js"></script>
+
     {% if jekyll.environment == 'production' %}
     {% include tracking-header.html %}
     {% endif %}
