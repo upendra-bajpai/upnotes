@@ -12,7 +12,6 @@ categories: [ Android,DI ]
 
 image: assets/images/4.jpg
 
-tags: [featured]
 
 ---
 

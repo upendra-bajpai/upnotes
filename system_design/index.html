@@ -53,7 +53,7 @@ description: "Tech enthusiast @geekypanda."
                 {% if second_post.image %}
                 <div class="col-md-4">
                 <a href="{{site.baseurl}}{{second_post.url}}">
-                 <img class="blur-up lazyload w-100" loading="lazy" src="{% if second_post.image contains "://" %}{{ second_post.image }}{% else %}{{ second_post.image | absolute_url }}{% endif %}" alt="{{ second_post.title }}">
+                 <img class="blur-up lazyload w-100" src="{% if second_post.image contains "://" %}{{ second_post.image }}{% else %}{{ second_post.image | absolute_url }}{% endif %}" alt="{{ second_post.title }}">
                 </a>
                 </div>
                 {% endif %}                
@@ -80,7 +80,7 @@ description: "Tech enthusiast @geekypanda."
                 {% if third_post.image %}
                 <div class="col-md-4">
                 <a href="{{site.baseurl}}{{third_post.url}}">
-                 <img class="blur-up lazyload w-100" loading="lazy" src="{% if third_post.image contains "://" %}{{ third_post.image }}{% else %}{{site.baseurl}}/{{ third_post.image }}{% endif %}" alt="{{ third_post.title }}">
+                 <img class="blur-up lazyload w-100" src="{% if third_post.image contains "://" %}{{ third_post.image }}{% else %}{{site.baseurl}}/{{ third_post.image }}{% endif %}" alt="{{ third_post.title }}">
                 </a>
                 </div>
                 {% endif %}                
@@ -107,7 +107,7 @@ description: "Tech enthusiast @geekypanda."
                 {% if fourth_post.image %}
                 <div class="col-md-4">
                 <a href="{{site.baseurl}}{{fourth_post.url}}">
-                <img class="blur-up lazyload w-100" loading="lazy" src="{% if fourth_post.image contains "://" %}{{ fourth_post.image }}{% else %}{{site.baseurl}}/{{ fourth_post.image }}{% endif %}" alt="{{ fourth_post.title }}">
+                <img class="blur-up lazyload w-100" src="{% if fourth_post.image contains "://" %}{{ fourth_post.image }}{% else %}{{site.baseurl}}/{{ fourth_post.image }}{% endif %}" alt="{{ fourth_post.title }}">
                 </a>
                 </div>
                 {% endif %}                
@@ -161,9 +161,9 @@ description: "Tech enthusiast @geekypanda."
 
               {% for page in (1..paginator.total_pages) %}
                 {% if page == paginator.page %}
-            <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[2].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
-            {% else %}
-            <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[2].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
               {% endfor %}
 

@@ -12,10 +12,10 @@ description: "Tech enthusiast @geekypanda."
     
     
 <!-- Begin post excerpts, let's highlight the first 4 posts on top -->
-<!-- till minimum 7 posts--->
-<!-- <div class="row remove-site-content-margin">
+<div class="row remove-site-content-margin">
     
-    <!-- latest post --
+   <!--  latest post -->
+   <!---
     {% assign latest_post = paginator.posts[0] %}
     <div class="col-md-6">
     <div class="card border-0 mb-4 box-shadow">   
@@ -74,7 +74,7 @@ description: "Tech enthusiast @geekypanda."
                 </div>
             </div>
         
-        third latest post
+        <!-- third latest post --
         {%- assign third_post = paginator.posts[2] -%}        
         <div class="mb-3 d-flex align-items-center">                
                 {% if third_post.image %}
@@ -131,9 +131,9 @@ description: "Tech enthusiast @geekypanda."
     </div>
     
 </div>
- -->
-    
 
+    
+ -->
 
 <!-- Now the rest of the posts with the usual loop but with an offset:4 on the first page so we can skeep the first 4 posts displayed above -->
     
@@ -144,7 +144,7 @@ description: "Tech enthusiast @geekypanda."
         <h4 class="font-weight-bold spanborder"><span>All Stories</span></h4>
         
 
-       <!--- put offset:4 after 7 posts --->
+      <!--- put offset:4 after 7 posts --->
          {% for post in paginator.posts  %}
             {% include main-loop-card.html %}
         {% endfor %}
@@ -161,11 +161,9 @@ description: "Tech enthusiast @geekypanda."
 
               {% for page in (1..paginator.total_pages) %}
                 {% if page == paginator.page %}
-                <li class="page-item disabled"><span class="webjeda page-link">{{ page }}</span></li>
-                {% elsif page == 1 %}
-               <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[0].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
-               {% else %}
-               <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[0].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
               {% endfor %}
 
