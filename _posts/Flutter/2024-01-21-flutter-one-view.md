@@ -67,9 +67,7 @@ dispose()
 
 mounted == false
 
-  
-
-![cacheimage](/upnotes/assets/images/img/life_cycle.png)
+{% include lazyload.html image_src="/assets/images/img/life_cycle.png" image_alt="Alt" image_title="Title" %}
 
   
 

@@ -2,9 +2,9 @@
 
 layout: post
 
-title: "Simple custom animation in Flutter from scratch using `AnimatedBuilder`"
+title: "Simple custom animation in Flutter from scratch using AnimatedBuilder"
 
-author: sal
+author: jane
 
 date: 2024-01-11-03:25:54
 
