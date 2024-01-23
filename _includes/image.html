@@ -1,0 +1,21 @@
+<!-- Include the medium-zoom script in the head of your html file -->
+<script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+
+<!-- Create a custom liquid tag for images that will use the medium-zoom plugin -->
+{% capture image %}
+  <figure>
+    <img src="{{site.baseurl}}/{{ include.src }}" alt="{{ include.alt }}" class="zoomable" />
+    {% if include.caption %}
+      <figcaption>{{ include.caption }}</figcaption>
+    {% endif %}
+  </figure>
+{% endcapture %}
+{{ image | markdownify }}
+<script>
+    // You can customize the options here
+    mediumZoom('.zoomable', {
+      margin: 24,
+      background: '#ffffff',
+      scrollOffset: 40 // The number of pixels to scroll to close the zoom
+    })
+  </script>
