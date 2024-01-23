@@ -67,9 +67,8 @@ dispose()
 
 mounted == false
 
-{% include lazyload.html image_src="/assets/images/img/life_cycle.png" image_alt="Alt" image_title="Title" %}
 
-  
+{% include image.html src="/assets/images/img/life_cycle.png" alt="Jekyll logo" caption="LifeCycle Stateful Widget" %}
 
 ---
 
@@ -143,8 +142,7 @@ Hot restart is much different than hot reload. In Hot restart it destroys the pr
 7.Why is the build() method on State and not StatefulWidget?
 
   
-
-![cacheimage](/upnotes/assets/images/img/stateful_build.png)
+{% include image.html src="/assets/images/img/stateful_build.png" alt="Jekyll logo" caption="" %}
 
   
 
@@ -288,8 +286,8 @@ GlobalKeys have two uses: they allow widgets to change parents anywhere in your 
 #### 17.When should you use mainAxisAlignment and crossAxisAlignment?
 
   
+{% include image.html src="/assets/images/img/mainAxisAlignment.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/mainAxisAlignment.png)
 
   
 
@@ -311,9 +309,8 @@ When you want the widget to be big as the parent widget allow
 
 #### 19.What is `Ticker`#### , `Tween` and `AnimationController`?
 
-  
+{% include image.html src="/assets/images/img/ticker.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/ticker.png)
 
   
 
@@ -329,9 +326,8 @@ To achieve sequence animation we’ll introduce a new Widget that also helps wit
 
 #### 20.What is `ephemeral` state?
 
-  
+  {% include image.html src="/assets/images/img/ephemeral.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/ephemeral.png)
 
   
 
@@ -412,13 +408,12 @@ https://itnext.io/flutter-mainaxissize-max-vs-min-d9095d8f7914
 
 #### 26.`SizedBox` VS `Container`?
 
-  
+  {% include image.html src="/assets/images/img/sized.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/sized.png)
 
-  
+  {% include image.html src="/assets/images/img/sized2.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/sized2.png)
+
 
   
 
@@ -437,7 +432,7 @@ https://itnext.io/flutter-mainaxissize-max-vs-min-d9095d8f7914
 
 3. Offstage
 
-https://medium.com/@danle.sdev/widget-hide-and-seek-a-guide-to-managing-flutter-widgets-visibility-d7977cbaf444
+[flutter-widgets-visibility](https://medium.com/@danle.sdev/widget-hide-and-seek-a-guide-to-managing-flutter-widgets-visibility-d7977cbaf444)
 
   
 
@@ -490,13 +485,13 @@ For example, if there is an onscreen keyboard displayed above the scaffold, the 
 
 `With resizeToAvoidBottomInset`
 
-https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/316760/7da984e6-ec32-7989-174c-0e104e4c5557.gif
+[wit resizeToAvoidBottomInset](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/316760/7da984e6-ec32-7989-174c-0e104e4c5557.gif)
 
   
 
 `without resizeToAvoidBottomInset`
 
-https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/316760/0c933d45-82a2-4401-836c-d1c6f5abc2db.gif
+[without resizeToAvoidBottomInset](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/316760/0c933d45-82a2-4401-836c-d1c6f5abc2db.gif)
 
   
 
@@ -506,9 +501,8 @@ https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/316760/0c933d45-82a2
 
 #### 31.What is the difference between `as`,`show` and `hide` in an import statement?
 
-  
+  {% include image.html src="/assets/images/img/as.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/as.png)
 
   
 
@@ -570,7 +564,7 @@ Cannot change the list items by adding or removing
 
   
 
-https://github.com/filiph/state_experiments/issues/5
+[state experiment](https://github.com/filiph/state_experiments/issues/5)
 
   
 
@@ -596,7 +590,7 @@ If expr1 is non-null, returns its value; otherwise, evaluates and returns the va
   
   
 
-https://dart.dev/guides/language/language-tour
+[dart lang tour](https://dart.dev/guides/language/language-tour)
 
   
 
@@ -623,9 +617,8 @@ ModalRoute.of() method. This method returns the current route with the arguments
 
 #### 39.Difference between a `Navigator.pushNamed` and `Navigator.pushReplacementNamed`?
 
-  
+  {% include image.html src="/assets/images/img/pushNamed.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/pushNamed.png)
 
   
 
@@ -637,7 +630,7 @@ ModalRoute.of() method. This method returns the current route with the arguments
 
   
 
-https://codewithandrea.com/articles/2019-06-10-global-access-vs-scoped-access/
+[global-access-vs-scoped-access](https://codewithandrea.com/articles/2019-06-10-global-access-vs-scoped-access/)
 
   
 
@@ -648,8 +641,8 @@ https://codewithandrea.com/articles/2019-06-10-global-access-vs-scoped-access/
 41.Difference between getDocuments() vs snapshots(#### )?
 
   
+{% include image.html src="/assets/images/img/getDocuments.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/getDocuments.png)
 
   
 
@@ -869,9 +862,8 @@ The difference is that Futures are about one-shot request/response (I ask, there
 
 #### 56.How to compare two dates that are constructed differently in Dart?
 
-  
+  {% include image.html src="/assets/images/img/date.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/date.png)
 
   
 
@@ -881,9 +873,8 @@ The difference is that Futures are about one-shot request/response (I ask, there
 
 57.What's the difference between `async` and `async#### *` in Dart?
 
-  
+  {% include image.html src="/assets/images/img/async.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/async.png)
 
   
 
@@ -934,8 +925,7 @@ Tracing is enabled, and tools supporting source-level debugging (such as DevTool
 #### 59.How to convert a `List` into a `Map` in Dart?
 
   
-
-![cacheimage](/upnotes/assets/images/img/list.png)
+{% include image.html src="/assets/images/img/list.png" alt="Jekyll logo" caption="" %}
 
   
   
@@ -946,9 +936,8 @@ Tracing is enabled, and tools supporting source-level debugging (such as DevTool
 
 #### 60.What does `non-nullable` by default mean?
 
-  
+  {% include image.html src="/assets/images/img/no_null.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/no_null.png)
 
   
 
@@ -958,13 +947,12 @@ Tracing is enabled, and tools supporting source-level debugging (such as DevTool
 
 #### 61.`Expanded` vs `Flexible`?
 
+  {% include image.html src="/assets/images/img/flex1.png" alt="Jekyll logo" caption="" %}
+
+
   
+{% include image.html src="/assets/images/img/flex2.png" alt="Jekyll logo" caption="" %}
 
-![cacheimage](/upnotes/assets/images/img/flex1.png)
-
-  
-
-![cacheimage](/upnotes/assets/images/img/flex2.png)
 
   
   
@@ -976,8 +964,7 @@ Tracing is enabled, and tools supporting source-level debugging (such as DevTool
 #### 62.Why is `exit(0)` not preferred for closing an app?
 
   
-
-![cacheimage](/upnotes/assets/images/img/exit0.png)
+{% include image.html src="/assets/images/img/exit0.png" alt="Jekyll logo" caption="" %}
 
   
 
