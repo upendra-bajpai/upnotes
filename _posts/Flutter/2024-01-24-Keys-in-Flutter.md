@@ -2,7 +2,7 @@
 
 layout: post
 
-title: "Simple custom animation in Flutter from scratch using AnimatedBuilder"
+title: "Keys in flutter"
 
 author: jane
 
@@ -10,7 +10,7 @@ date: 2024-01-11-03:25:54
 
 categories: [ Flutter, Oneview ]
 
-image: assets/images/flutter/flutter-animatedbuilder.gif
+image: assets/images/flutter/4.gif
 
 ---
 

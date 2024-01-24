@@ -11,6 +11,11 @@
   </figure>
 {% endcapture %}
 {{ image | markdownify }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  mediumZoom('.zoomable');
+});
+</script>
 <!---<script>
     // You can customize the options here
     mediumZoom('.zoomable', {
