@@ -53,7 +53,8 @@ A key is an identifier that allows you to uniquely identify and differentiate be
 ---
 In this example, we have a list of users. Each user is assigned a unique ObjectKey based on the user object.
 - **UniqueKey**: The unique key is used when you need a key that is unique across the entire app.
- ```class MyWidget extends StatefulWidget {
+ ```
+ class MyWidget extends StatefulWidget {
   MyWidget({Key? key}) : super(key: key ?? UniqueKey());
 
   @override
