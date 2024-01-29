@@ -57,6 +57,14 @@ defaults:
       path: "_pages"
     values:
       layout: page
+      
+gems:
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-paginate-multiple
+exclude:
+  - Gemfile
+  - Gemfile.lock
 
   
 # Syntax
