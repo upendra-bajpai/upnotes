@@ -3,7 +3,7 @@ layout: post
 title:  "Android jetpack compose intro"
 author: sal
 date: 2020-07-24-02:25:54
-categories: [ Jekyll, tutorial ]
+categories: [ android, tutorial ]
 image: assets/images/android/composecheat.png
 ---
 #### Jetpack Compose

@@ -3,7 +3,7 @@ layout: post
 title:  "Unit Testing Login Functionality in Android with Kotlin and Mockito"
 author: sal
 date: 2020-07-24-02:25:54
-categories: [ Jekyll, tutorial ]
+categories: [ tutorial,android ]
 image: assets/images/4.jpg
 ---
 # Unit Testing Login Functionality in Android with Kotlin and Mockito
