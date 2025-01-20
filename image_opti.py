@@ -20,7 +20,7 @@ def reduce_image_size(input_path, output_path, target_size_kb=800, max_size_kb=1
 
             while original_size > max_size_bytes and quality > 0:
                 # Resize the image if it's still too large
-                img = img.resize((width, height), Image.ANTIALIAS)
+                img = img.resize((width, height), Image.LANCZOS)
                 img.save(output_path, quality=quality)
                 original_size = os.path.getsize(output_path)
                 quality -= step
