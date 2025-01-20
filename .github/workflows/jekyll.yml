@@ -20,14 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install Ruby
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libssl-dev libreadline-dev zlib1g-dev
-          git clone https://github.com/rbenv/ruby-build.git
-          PREFIX=/opt/hostedtoolcache/Ruby/3.1.4/x64 ./ruby-build/bin/ruby-build 3.1.4 /opt/hostedtoolcache/Ruby/3.1.4/x64
-          touch /opt/hostedtoolcache/Ruby/3.1.4/x64.complete
-          echo "/opt/hostedtoolcache/Ruby/3.1.4/x64/bin" >> $GITHUB_PATH
+      - name: Set timezone to IST
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Kolkata"
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:

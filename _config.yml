@@ -7,6 +7,7 @@ baseurl: '/upnotes'
 ganalytics: 'G-Y699GMLWNL'
 disqus: 'geekypandaml'
 email: 'tronsamtron@yandex.com'
+timezone: Asia/Kolkata
 mailchimp-list: 'https://geekypanda.us17.list-manage.com/subscribe/post?u=5de9558caf21ac2e9970bc459&amp;id=5a179d8608'
 
 include: ["_pages"]
