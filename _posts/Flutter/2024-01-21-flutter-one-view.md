@@ -8,7 +8,9 @@ author: sal
 
 date: 2024-01-11-03:25:54
 
-categories: [ featured,Flutter, oneview ]
+categories: [ Flutter, oneview ]
+
+tags: [featured,Flutter]
 
 image: assets/images/fluttertopis.webp
 
