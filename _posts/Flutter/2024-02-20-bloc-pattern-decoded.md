@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bloc_Pattern_Decoded"
+title:  "Bloc Pattern Decoded"
 author: sal
 date: 2024-02-20-19:08:19
 categories: [  tutorial ]
