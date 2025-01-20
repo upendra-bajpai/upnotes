@@ -347,4 +347,4 @@ Other things to discuss if time permits:
  * Breaking ties - When two players have the same score, we can break the tie by sorting them based on last played game.
  * System failure recovery - In the event of a large-scale Redis outage, we can recreate the leaderboard by going through the MySQL WAL entries and recreate it via an ad-hoc script
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

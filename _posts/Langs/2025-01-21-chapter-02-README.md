@@ -276,4 +276,4 @@ However, bear in mind that acquiring and releasing locks all the time has some o
 
 Avoid synchronizing long-running I/O or network operations.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

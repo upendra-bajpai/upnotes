@@ -1508,4 +1508,4 @@ If parallelization is 3:
 
 The takeaway is that throwing hardware at a program can only optimize it to a certain degree. After a given point, you'd need to optimize your non-parallelizable part of the program.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -396,4 +396,4 @@ To maximize the benefit of decomposing an application into tasks, you must ident
 
 In some applications, the obvious task boundaries work well, whereas in others some analysis may be required to uncover finer-grained exploitable parallelism
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

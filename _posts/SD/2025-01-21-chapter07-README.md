@@ -249,4 +249,4 @@ We covered a lot of concepts and techniques, here's a summary:
 | Handling data center outage | Cross-datacenter replication                          |
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

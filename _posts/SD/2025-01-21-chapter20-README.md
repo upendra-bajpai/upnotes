@@ -430,4 +430,4 @@ Additional talking points:
  * Retry consumption - if we can't process a message immediately, we could send it to a dedicated retry topic to be attempted later.
  * Historical data archive - old messages can be backed up in high-capacity storages such as HDFS or object storage (eg S3).
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

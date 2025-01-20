@@ -345,4 +345,4 @@ A high-quality visualization system is very hard to build. It is hard to justify
 Here's our final design:
 {% include image.html src="assets/images/system-design/final-design.png" alt="final-design" caption="" %}
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

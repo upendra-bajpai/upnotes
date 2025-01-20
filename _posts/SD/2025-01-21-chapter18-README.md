@@ -176,4 +176,4 @@ Core components:
 
 We also explored how to scale restful api servers, websocket servers, data layer, redis pub/sub servers and we also explored an alternative to using Redis Pub/Sub. We also explored a "random nearby person" feature.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

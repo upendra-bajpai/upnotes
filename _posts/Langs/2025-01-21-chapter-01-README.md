@@ -108,4 +108,4 @@ Examples of frameworks & tools, demanding you write thread-safe code:
  * JSPs & Servlets
  * RMI
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -347,4 +347,4 @@ Things we covered:
  * Covered uploading, downloading, listing, versioning of objects in a bucket
  * Deep dived in the design - data store and metadata store, replication and erasure coding, multipart uploads, sharding
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

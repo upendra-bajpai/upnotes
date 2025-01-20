@@ -204,4 +204,4 @@ Other relevant talking points:
  * Availability, consistency, reliability - concepts at the core of any large system's success.
  * Analytics - We might also have to collect and analyze data in order to fine tune our system further.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

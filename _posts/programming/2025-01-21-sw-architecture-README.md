@@ -9,4 +9,4 @@ image: assets/images/4.jpg
 # Software Architecture Anti Patterns
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

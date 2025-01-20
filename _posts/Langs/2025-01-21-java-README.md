@@ -17,4 +17,4 @@ Notes for books related to java programming
 ## Tutorials
  * [Jenkov Concurrency Tutorial](./jenkov-concurrency)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

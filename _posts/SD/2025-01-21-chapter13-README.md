@@ -260,4 +260,4 @@ Additional talking points:
  * Message resend mechanism - retrying and queueing are common approaches for re-sending messages.
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -385,4 +385,4 @@ When multiple threads are trying to write to stdout, they are all blocked on I/O
 By having a dedicated background logging thread, it is only that thread which is blocked on the I/O. All other threads can continue its work.
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

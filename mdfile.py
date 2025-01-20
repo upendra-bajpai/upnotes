@@ -60,7 +60,7 @@ categories: [tutorial, {first_image_name},{input_root_folder}]
 image: {first_image_url if first_image_url else 'assets/images/4.jpg'}
 ---
 {modified_content}
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov
 '''
 
     # Ensure date is not duplicated in filename

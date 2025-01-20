@@ -461,4 +461,4 @@ Rely on some additional tools to improve code quality:
  * Profiling and monitoring - measuring performance & finding bottlenecks
  * Aspect-oriented programming - e.g. asserting invariants are met
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

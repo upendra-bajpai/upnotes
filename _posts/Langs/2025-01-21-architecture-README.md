@@ -17,4 +17,4 @@ Notes for resources related to software architecture.
 ## Talks
  * [How To Design A Good API and Why it Matters](./good-api-design-jb-talk)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

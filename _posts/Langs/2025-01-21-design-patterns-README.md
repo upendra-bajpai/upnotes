@@ -14,4 +14,4 @@ image: assets/images/4.jpg
  * [Structural Patterns](./ch04)
  * [Behavioral Patterns](./ch05)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

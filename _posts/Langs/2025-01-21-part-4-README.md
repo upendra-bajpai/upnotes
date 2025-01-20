@@ -407,4 +407,4 @@ Given this metric, each component can have its D plotted on a graph. Large devia
 <img src="images/distance-from-main-sequence.png" alt="Distance from main sequence chart" width="50%" height="50%">
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

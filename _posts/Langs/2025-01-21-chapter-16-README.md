@@ -245,4 +245,4 @@ You will never observe a partially constructed object if all its fields are fina
 However, final fields only guarantee that the object will be observed in a consistent state since its initialization. Additional synchronization might be required if the object's state is subsequently modified.
 Additionally, if the object's reference is allowed to escape during construction, that invalidates this initialization safety guarantee.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

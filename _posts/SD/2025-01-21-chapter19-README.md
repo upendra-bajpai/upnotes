@@ -341,4 +341,4 @@ This is our final design:
 
 One additional feature we could provide is multi-stop navigation which can be sold to enterprise customers such as Uber or Lyft in order to determine optimal path for visiting a set of locations.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

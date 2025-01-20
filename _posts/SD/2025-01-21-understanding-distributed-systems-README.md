@@ -18,4 +18,4 @@ Book notes taken during my read-through of UDS. Check out my [review of the book
  * [Part 4 - Resiliency](./part04)
  * [Part 5 - Maintainability](./part05)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

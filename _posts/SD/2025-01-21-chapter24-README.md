@@ -254,4 +254,4 @@ Additional talking points:
  * Security - email encryption, phishing protection, safe browsing, etc.
  * Optimizations - eg preventing duplication of the same attachments, sent multiple times by different users.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -42,4 +42,4 @@ Instead of getting the physical books, I've bought the online course, so there m
  * [Chapter 28 - Digital Wallet](./chapter28)
  * [Chapter 29 - Stock Exchange](./chapter29)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -82,4 +82,4 @@ Examples of real-world applications of consistent hashing:
  * Akamai CDN
  * Maglev network load balancer
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

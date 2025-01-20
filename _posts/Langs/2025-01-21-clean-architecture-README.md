@@ -17,4 +17,4 @@ image: assets/images/4.jpg
  * [Part 6 - Details](./part-6)
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

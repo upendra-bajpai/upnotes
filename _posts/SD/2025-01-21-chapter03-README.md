@@ -91,4 +91,4 @@ Some tips to take into consideration:
  * Label your units explicitly. Write 5mb instead of 5.
  * Commonly asked estimations to make - QPS (queries per second), peak QPS, storage, cache, number of servers.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

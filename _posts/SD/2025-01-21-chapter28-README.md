@@ -332,4 +332,4 @@ Here's the evolution of our design:
  * We also adopted CQRS with a reverse proxy to manage a transaction's lifecycle on behalf of our users
  * Finally, we partitioned our data across multiple raft groups, which are orchestrated using a distributed transaction mechanism - TC/C or distributed saga
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

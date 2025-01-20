@@ -532,4 +532,4 @@ Other interesting notes:
  * modern exchanges rely more on cloud infrastructure and also on automatic market makers (AMM) to avoid maintaining an order book
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

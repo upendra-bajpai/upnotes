@@ -8,4 +8,4 @@ image: assets/images/4.jpg
 ---
 # Software Development Anti Patterns
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

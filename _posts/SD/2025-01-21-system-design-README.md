@@ -15,4 +15,4 @@ Notes for resources related to system design.
  * [System Design Interview - An Insider's Guide (vol 1 & 2)](./system-design-interview)
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

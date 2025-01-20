@@ -262,4 +262,4 @@ This is faster than our approach but has drawbacks:
 Another interesting discussion is moving online/offline logic to separate service so that other services can reuse it to implement interesting functionality.
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

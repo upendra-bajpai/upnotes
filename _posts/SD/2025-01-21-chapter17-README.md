@@ -290,4 +290,4 @@ Summary of some of the more interesting topics we covered:
  * Discussed several indexing options - 2d search, evenly divided grid, geohash, quadtree, google S2
  * Discussed caching, replication, sharding, cross-DC deployments in the deep dive section
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

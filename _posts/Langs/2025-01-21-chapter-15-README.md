@@ -350,4 +350,4 @@ That way, you can detect whether the memory register has "your version" of the `
 
 Support for this is provided by the `AtomicStampedReference` class and its relatives.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

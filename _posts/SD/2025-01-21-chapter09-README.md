@@ -120,4 +120,4 @@ Additional talking points:
  * Availability, consistency, reliability - At the core of every distributed systems. We'd leverage concepts already discussed in [Chapter 02](../chapter02).
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -17,4 +17,4 @@ Notes for antipatterns on various subjects, based on [these article series](http
 
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

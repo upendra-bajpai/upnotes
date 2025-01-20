@@ -35,4 +35,4 @@ Book notes taken during my read-through of [Programming Concurrency on the JVM](
 ## Epilogue
  * [Chapter 10 - Zen of Programming Concurrency](./chapter-10)
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

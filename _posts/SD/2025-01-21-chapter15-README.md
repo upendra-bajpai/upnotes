@@ -271,4 +271,4 @@ Additional talking points:
    * different error handling, as there is a timeout after which we need to stop retrying
    * Video takedowns - videos that violate copyrights, pornography, any other illegal acts need to be removed either during upload flow or based on user flagging.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

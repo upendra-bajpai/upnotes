@@ -207,4 +207,4 @@ We also dug deeper into some components and optimizations:
  * Respect user settings - Users can opt-out of receiving notifications. Service checks the user settings first, before sending notifications.
  * Rate limiting - Users would appreciate if we don't bombard them with a dozen of notifications all of a sudden.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

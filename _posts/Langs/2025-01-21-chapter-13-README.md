@@ -228,4 +228,4 @@ public class ReadWriteMap<K,V> {
 Comparison between read-write & explicit locks, wrapping an array list:
 {% include image.html src="assets/images/java/readwrite-lock-vs-explicit-lock.png" alt="Read-Write locks vs. explicit locks performance" caption="" %}
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

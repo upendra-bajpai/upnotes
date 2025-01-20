@@ -297,4 +297,4 @@ Use checked exceptions when the client needs to take a recovery action. Use unch
 ### Include Failure-Capture Information in Exceptions
 Allows diagnosis and recovery. Do this for checked exceptions. For unchecked ones, a message is sufficient.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

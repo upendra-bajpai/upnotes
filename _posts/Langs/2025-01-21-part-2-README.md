@@ -328,4 +328,4 @@ Hence, realize that software is not a rapidly-evolving discipline. It has stayed
 All programs consist of some permutation of sequence, selection, iteration and indirection. Nothing more, nothing less.
 It is only our tools and knowledge of how to write software that has evolved.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

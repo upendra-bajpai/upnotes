@@ -400,4 +400,4 @@ These are the steps we went through:
  * Finally we addressed how to handle data consistency issues across multiple microservices
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

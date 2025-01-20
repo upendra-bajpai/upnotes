@@ -136,4 +136,4 @@ Other talking points:
  * Loose coupling components via message queues
  * Monitoring key metrics - QPS and latency.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

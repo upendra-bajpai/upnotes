@@ -463,4 +463,4 @@ public class ImprovedList<T> implements List<T> {
 # Documenting synchronization policies
 Document a class's thread safety guarantees for its clients. Document it's synchronization policy for its maintainers
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

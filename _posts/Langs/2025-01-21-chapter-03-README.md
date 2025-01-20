@@ -404,4 +404,4 @@ The most useful synchronization policies:
  * Shared thread-safe objects perform synchronization internally, so clients can use it without additional synchronization (unless a compound non-atomic action is used)
  * Guarded objects can be used concurrently only with a specific lock held. 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

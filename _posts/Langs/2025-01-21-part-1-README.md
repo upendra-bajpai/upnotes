@@ -106,4 +106,4 @@ This will inevitably lead to a fight with other stakeholders, but remember - you
 It is your responsibility to safeguard it & ensure that it grows with sustainable architecture.
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

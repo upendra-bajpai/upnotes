@@ -175,4 +175,4 @@ Sometimes, the developer is forced to use thread-confinement when e.g. using a n
 
 All the techniques discussed in this chapter can be borrowed for designing solutions for other single-threaded subsystems as well.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

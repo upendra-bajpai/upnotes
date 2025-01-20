@@ -169,4 +169,4 @@ Other talking points:
    * Change ranking model to assign more weight to recent search queries
    * Data may come as streams which you filter upon and use map-reduce technologies to process it - Hadoop, Apache Spark, Apache Storm, Apache Kafka, etc.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

@@ -92,4 +92,4 @@ Additional talking points:
  * Section length tuning - we could sacrifice some sequence number bits for more timestamp bits in case of low concurrency and long-term applications.
  * High availability - ID generators are a critical component and must be highly available.
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

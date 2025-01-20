@@ -738,4 +738,4 @@ You should only use them when tearing down objects that manage resources acquire
 
 > Avoid using finalizers
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

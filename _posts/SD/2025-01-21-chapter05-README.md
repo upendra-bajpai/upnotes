@@ -283,4 +283,4 @@ Additional talking points if time permits:
    * Gracefully handle exceptions due to being rate limited
    * Add sufficient back-off and retry logic
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

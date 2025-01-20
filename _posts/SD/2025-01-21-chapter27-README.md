@@ -295,4 +295,4 @@ Other talking points:
  * Cash payment - very common in places like India and Brazil
  * Google/Apple Pay integration
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

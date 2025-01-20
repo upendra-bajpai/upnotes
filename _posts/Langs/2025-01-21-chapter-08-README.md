@@ -544,4 +544,4 @@ public class PuzzleSolver<P,M> extends ConcurrentPuzzleSolver<P,M> {
 }
 ```
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

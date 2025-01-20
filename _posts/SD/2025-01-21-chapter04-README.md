@@ -137,4 +137,4 @@ Here's a rough guide on how much time you should spend on each step:
  * Design deep dive - 10-25m
  * Wrap-up - 3-5m
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov

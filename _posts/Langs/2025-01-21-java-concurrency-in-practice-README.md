@@ -40,4 +40,4 @@ Book notes taken during my read-through of JCIP. See [my review of the book](htt
  * [Chapter 16 - The Java Memory Model](./chapter-16)
 
 
-#####credit goes to @preslavmihaylov
+###### credit goes to @preslavmihaylov
