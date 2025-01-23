@@ -192,7 +192,12 @@ description: "Tech enthusiast @geekypanda."
               {% endif %}
                <li class="page-item disabled"><span class="webjeda page-link">{{ paginator.page }}</span></li>
             
-              <!-- {% for page in (1..paginator.total_pages) %}
+            {% assign max_pages = paginator.total_pages | plus: 0 %}
+              {% if max_pages > 5 %}
+                {% assign max_pages = 5 %}
+              {% endif %}
+              
+              {% for page in (1..max_pages) %}
                 {% if page == paginator.page %}
                 <li class="page-item disabled"><span class="webjeda page-link">{{ page }}</span></li>
                 {% elsif page == 1 %}
@@ -200,7 +205,7 @@ description: "Tech enthusiast @geekypanda."
                 {% else %}
                 <li class="page-item"><a class="page-link" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
-              {% endfor %} -->
+              {% endfor %} 
 
               {% if paginator.next_page %}
                 <li class="page-item"><a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a></li>

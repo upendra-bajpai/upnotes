@@ -159,11 +159,16 @@ description: "Tech enthusiast @geekypanda."
                 <li class="page-item disabled"><span class="prev page-link">&laquo;</span></li>
               {% endif %}
 
-              {% for page in (1..paginator.total_pages) %}
+              {% assign max_pages = paginator.total_pages | plus: 0 %}
+              {% if max_pages > 5 %}
+                {% assign max_pages = 5 %}
+              {% endif %}
+              
+              {% for page in (1..max_pages) %}
                 {% if page == paginator.page %}
-                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[2].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
                 {% else %}
-                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[2].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
               {% endfor %}
 
