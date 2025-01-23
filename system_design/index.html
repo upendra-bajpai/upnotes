@@ -160,23 +160,33 @@ description: "Tech enthusiast @geekypanda."
               {% endif %}
 
               {% assign max_pages = paginator.total_pages | plus: 0 %}
-              {% if max_pages > 5 %}
-                {% assign max_pages = 5 %}
+              {% if paginator.page >= 6 %}
+                {% assign start_page = paginator.page | divided_by: 5 | times: 5 | minus: 4 %}
+              {% else %}
+                {% assign start_page = 1 %}
               {% endif %}
               
-              {% for page in (1..max_pages) %}
+              {% if max_pages > 5 %}
+                {% assign max_pages = start_page | plus: 4 %}
+                {% if max_pages > paginator.total_pages %}
+                  {% assign max_pages = paginator.total_pages %}
+                {% endif %}
+              {% endif %}
+              
+              {% for page in (start_page..max_pages) %}
                 {% if page == paginator.page %}
-                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[5].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
+                <li class="page-item active"><span class="page-link">{{ page }}</span></li>
                 {% else %}
                 <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[5].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
               {% endfor %}
-
+              
               {% if paginator.next_page %}
                 <li class="page-item"><a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a></li>
               {% else %}
                 <li class="page-item disabled"><span class="next page-link">&raquo;</span></li>
               {% endif %}
+              
             </ul>
             {% endif %}      
         </div>
