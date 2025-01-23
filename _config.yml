@@ -75,6 +75,10 @@ paginate_multiple:
 
   - paginate: 10
     paginate_path: '/programming/page:num/'
+    sub_dir: '/programming'
+
+  - paginate: 10
+    paginate_path: '/DSA/page:num/'
     sub_dir: '/DSA'
 
   - paginate: 10
