@@ -161,9 +161,9 @@ description: "Tech enthusiast @geekypanda."
 
               {% for page in (1..paginator.total_pages) %}
                 {% if page == paginator.page %}
-                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{site.paginate_multiple[0].paginate_path | prepend: site.baseurl | replace: '//', '/' | remove: 'page'| remove: ":num"}}">{{ page }}</a></li>
                 {% else %}
-                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[1].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{{ site.paginate_multiple[0].paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a></li>
                 {% endif %}
               {% endfor %}
 
