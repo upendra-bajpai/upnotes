@@ -194,6 +194,28 @@ Navigation and routing are some of the core concepts of all mobile application, 
 
 Allow us to add animation transaction to the route
 
+```
+Navigator.of(context).push(
+  PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => NewScreen(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.easeInOut;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
+  ),
+);
+
+```
+
 ![page-route-transition](https://medium.com/flutter-community/everything-you-need-to-know-about-flutter-page-route-transition-9ef5c1b32823)
 
   
@@ -239,22 +261,192 @@ By using setState to update the listview item source and rebuild the UI
 
   
 
-#### 14.What is a `Stream`?
+#### 14a. What is a `Stream`?
 
   
 
 A stream is like a pipe, you put a value on the one end and if there’s a listener on the other end that listener will receive that value. A Stream can have multiple listeners and all of those listeners will receive the same value when it’s put in the pipeline. The way you put values on a stream is by using a StreamController
 
-  
+  ```
+  class StreamListenerExample extends StatefulWidget {
+  @override
+  _StreamListenerExampleState createState() => _StreamListenerExampleState();
+}
+
+class _StreamListenerExampleState extends State<StreamListenerExample> {
+  final StreamController<int> _controller = StreamController<int>();
+  StreamSubscription<int>? _subscription;
+  int _value = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = _controller.stream.listen(
+      (data) {
+        setState(() {
+          _value = data;
+        });
+      },
+      onError: (error) {
+        print('Error: $error');
+      },
+      onDone: () {
+        print('Stream is done.');
+      },
+      cancelOnError: true,
+    );
+
+    // Emit values to the stream
+    _startEmittingValues();
+  }
+
+  void _startEmittingValues() {
+    for (int i = 1; i <= 5; i++) {
+      Future.delayed(Duration(seconds: i), () {
+        _controller.add(i);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    _controller.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Stream Listener Example')),
+      body: Center(
+        child: Text(
+          'Value: $_value',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+  ```
+  or, we can use stream builders
+  ```
+  StreamBuilder<int>(
+  stream: _streamController.stream,
+  builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return CircularProgressIndicator();
+    } else if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    } else if (!snapshot.hasData) {
+      return Text('No data yet');
+    } else {
+      return Text(
+        'Counter: ${snapshot.data}',
+        style: TextStyle(fontSize: 24),
+      );
+    }
+  },
+);
+
+```
 
 ---
 
-  
+#### 14b. what is the difference between single sub stream and broadcast
+
 
 #### 15.What are `keys` in Flutter and when should you use it?
 
+Single Listener:
+Can only have one listener at a time. If you try to listen to the same stream more than once, it will throw an error.
+ -Lifecycle:
+ -The listener receives events until it cancels the subscription or the stream closes.
   
+Broadcast Streams:
+Can have multiple listeners at the same time. All listeners receive the same events.
+-Lifecycle:
+-The stream continues to emit events to all listeners even if one or more listeners cancel their subscription.
+
+```
+final controller = StreamController<int>.broadcast();
+
+controller.stream.listen((data) {
+  print('Listener 1: $data');
+});
+
+controller.stream.listen((data) {
+  print('Listener 2: $data');
+});
+
+for (int i = 1; i <= 5; i++) {
+  controller.add(i);
+}
+
+controller.close();
+```
+
+---
+
+#### how to rebemeber scroll state in listviews
+how to rebemeber scroll state in listviews
+Remembering the scroll position in a ListView in Flutter involves using a ScrollController. By attaching a ScrollController to your ListView, you can keep track of the scroll position and restore it later. Here’s how you can achieve this.
+
+```
+
+class ListViewWithScrollState extends StatefulWidget {
+  @override
+  _ListViewWithScrollStateState createState() => _ListViewWithScrollStateState();
+}
+
+class _ListViewWithScrollStateState extends State<ListViewWithScrollState> {
+  ScrollController _scrollController;
+  double _scrollPosition = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController(
+      initialScrollOffset: _scrollPosition,
+    );
+
+    _scrollController.addListener(() {
+      _scrollPosition = _scrollController.position.pixels;
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('ListView Scroll State')),
+      body: ListView.builder(
+        controller: _scrollController,
+        itemCount: 50,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text('Item $index'),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _scrollController.animateTo(
+            0,
+            duration: Duration(seconds: 1),
+            curve: Curves.easeInOut,
+          );
+        },
+        child: Icon(Icons.arrow_upward),
+      ),
+    );
   
+  ```
+---
 
 You don't need to use Keys most of the time, the framework handles it for you and uses them internally to differentiate between widgets. There are a few cases where you may need to use them though.
 
@@ -540,7 +732,46 @@ List<String> reversedAnimals = animals.reversed.toList();
 
 #### 34.Difference between a Modal and Persistent BottomSheet with an example?
 
-  
+Modal bottom sheet
+```
+void _showModalBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        height: 200,
+        child: Center(
+          child: Text('Modal Bottom Sheet'),
+        ),
+      );
+    },
+  );
+}
+```
+Persistent Bottom Sheet
+```dart
+void _showPersistentBottomSheet(BuildContext context) {
+  Scaffold.of(context).showBottomSheet(
+    (BuildContext context) {
+      return Container(
+        height: 200,
+        color: Colors.blue,
+        child: Center(
+          child: Text('Persistent Bottom Sheet'),
+        ),
+      );
+    },
+  );
+}
+```
+
+#### Summary of Differences:
+
+| Feature              | Modal Bottom Sheet                                 | Persistent Bottom Sheet                               |
+|----------------------|----------------------------------------------------|-------------------------------------------------------|
+| **Interaction**      | Blocks interaction with the rest of the screen     | Allows interaction with the rest of the screen        |
+| **Dismissal**        | Can be dismissed by tapping outside or swiping down| Must be explicitly dismissed                          |
+| **Use Case**         | Simple actions or selections                       | Persistent content or options                         |
 
 ---
 
@@ -589,8 +820,39 @@ If expr1 is non-null, returns its value; otherwise, evaluates and returns the va
 
 `?.` Like . but the leftmost operand can be null; example: foo?.bar selects property bar from expression foo unless foo is null (in which case the value of foo?.bar is null)
 
-  
-  
+  - Null-aware Assignment Operator (??=)
+  - Null-aware Access Operator (?.)
+  - Null-aware Method Invocation (?.)
+  - Null Coalescing Operator (??)
+  - Null Assertion Operator (!)
+  ```dart
+  void main() {
+  int? a;
+  a ??= 5; // Assigns 5 to a because a is null
+  print(a); // Output: 5
+
+  String? name;
+  print(name?.length); // Output: null (name is null)
+
+  name = "Alice";
+  print(name?.length); // Output: 5
+
+  List<int>? numbers;
+  numbers?.add(1); // Does nothing because numbers is null
+
+  numbers = [];
+  numbers?.add(1); // Adds 1 to the list
+  print(numbers); // Output: [1]
+
+  int? x;
+  int y = x ?? 10; // y is assigned 10 because x is null
+  print(y); // Output: 10
+
+  x = 5;
+  y = x ?? 10; // y is assigned 5
+  print(y); // Output: 5
+}
+```
 
 [dart lang tour](https://dart.dev/guides/language/language-tour)
 
