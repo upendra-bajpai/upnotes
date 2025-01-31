@@ -825,6 +825,7 @@ If expr1 is non-null, returns its value; otherwise, evaluates and returns the va
   - Null-aware Method Invocation (?.)
   - Null Coalescing Operator (??)
   - Null Assertion Operator (!)
+  
   ```dart
   void main() {
   int? a;
@@ -951,9 +952,86 @@ AnimationController is for how long the animation would be and how to control fr
   
 
 #### 45.When to use a SingleTickerProviderStateMixin and TickerProviderStateMixin?
+- **`SingleTickerProviderStateMixin`**:
+  - Provides a single `Ticker`.
+  - Use when you need only one `AnimationController`.
 
+  ```dart
+import 'package:flutter/material.dart';
+
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> with SingleTickerProviderStateMixin {
+  AnimationController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this, // SingleTickerProviderStateMixin provides the ticker
+      duration: Duration(seconds: 1),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+```
+
+- **`TickerProviderStateMixin`**:
+  - Provides multiple `Ticker` objects.
+  - Use when you need more than one `AnimationController`.
   
 
+```dart
+import 'package:flutter/material.dart';
+
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> with TickerProviderStateMixin {
+  AnimationController? _controller1;
+  AnimationController? _controller2;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller1 = AnimationController(
+      vsync: this, // TickerProviderStateMixin provides the first ticker
+      duration: Duration(seconds: 1),
+    );
+    _controller2 = AnimationController(
+      vsync: this, // TickerProviderStateMixin provides the second ticker
+      duration: Duration(seconds: 2),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller1?.dispose();
+    _controller2?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+```
 ---
 
   
