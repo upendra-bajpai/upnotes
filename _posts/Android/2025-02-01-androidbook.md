@@ -2,7 +2,7 @@
 layout: post
 title:  "Testing - no_image"
 author: sal
-date: 2025-01-23-21:10:34
+date: 2025-02-01-21:10:34
 categories: [tutorial, no_image,testing]
 tags: [featured,Android]
 image: assets/images/4.jpg
@@ -2487,3 +2487,508 @@ This section provides:
 - Circular dependency solutions
 - Scope management best practices
 - Real-world injection examples
+
+(Due to technical issues, the search service is temporarily unavailable.)
+
+```markdown
+# 11. Testing <a name="testing"></a>
+
+## 11.1 Unit Testing Fundamentals
+
+### Testing Pyramid
+```mermaid
+graph TD
+    A[Unit Tests] --> 70%
+    B[Integration Tests] --> 20%
+    C[UI Tests] --> 10%
+```
+
+### Core Principles
+1. **FIRST**:
+   - Fast
+   - Isolated
+   - Repeatable
+   - Self-validating
+   - Timely
+
+2. **Test Coverage**:
+   - Aim for 70-80% coverage
+   - Focus on critical paths
+
+## 11.2 Unit Testing Implementation
+
+### ViewModel Test
+```kotlin
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val repository: DataRepository
+) : ViewModel() {
+    private val _data = MutableStateFlow<List<Item>>(emptyList())
+    val data: StateFlow<List<Item>> = _data
+
+    fun loadData() {
+        viewModelScope.launch {
+            _data.value = repository.fetchData()
+        }
+    }
+}
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class MainViewModelTest {
+    @get:Rule
+    val coroutineRule = MainCoroutineRule()
+
+    private val mockRepository = mockk<DataRepository>()
+    private lateinit var viewModel: MainViewModel
+
+    @Before
+    fun setup() {
+        viewModel = MainViewModel(mockRepository)
+    }
+
+    @Test
+    fun `loadData should update state flow`() = runTest {
+        // Arrange
+        val testData = listOf(Item(1, "Test"))
+        coEvery { mockRepository.fetchData() } returns testData
+
+        // Act
+        viewModel.loadData()
+        advanceUntilIdle()
+
+        // Assert
+        viewModel.data.test {
+            assertEquals(testData, awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+}
+```
+
+### Dependency Mocking with MockK
+```kotlin
+class UserRepositoryTest {
+    private val mockApi = mockk<ApiService>()
+    private lateinit var repository: UserRepository
+
+    @Before
+    fun setup() {
+        repository = UserRepository(mockApi)
+    }
+
+    @Test
+    fun `getUser should return valid user`() = runTest {
+        // Stub API response
+        coEvery { mockApi.getUser(any()) } returns User(id = 1, name = "Test")
+
+        // Execute
+        val result = repository.getUser(1)
+
+        // Verify
+        assertEquals("Test", result.name)
+        coVerify(exactly = 1) { mockApi.getUser(1) }
+    }
+}
+```
+
+## 11.3 UI Testing with Espresso
+
+### Basic Interaction Test
+```kotlin
+@RunWith(AndroidJUnit4::class)
+class MainActivityTest {
+    @get:Rule
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
+
+    @Test
+    fun loginButton_shouldOpenHomeScreen() {
+        // Type text
+        onView(withId(R.id.usernameInput))
+            .perform(typeText("user@example.com"), closeSoftKeyboard())
+            
+        // Click button
+        onView(withId(R.id.loginButton)).perform(click())
+        
+        // Verify navigation
+        onView(withId(R.id.homeLayout)).check(matches(isDisplayed()))
+    }
+}
+```
+
+### Idling Resources
+```kotlin
+class MyIdlingResource : IdlingResource {
+    private var callback: IdlingResource.ResourceCallback? = null
+    private var isIdle = true
+
+    override fun getName() = "MyIdlingResource"
+    override fun isIdleNow() = isIdle
+    override fun registerIdleTransitionCallback(callback: IdlingResource.ResourceCallback?) {
+        this.callback = callback
+    }
+
+    fun setIdleState(idle: Boolean) {
+        isIdle = idle
+        if (idle) callback?.onTransitionToIdle()
+    }
+}
+
+// Usage in test
+val idlingResource = MyIdlingResource()
+
+@Before
+fun registerIdlingResource() {
+    IdlingRegistry.getInstance().register(idlingResource)
+}
+
+@After
+fun unregisterIdlingResource() {
+    IdlingRegistry.getInstance().unregister(idlingResource)
+}
+```
+
+## 11.4 Instrumentation Testing
+
+### Hilt Integration
+```kotlin
+@HiltAndroidTest
+@UninstallModules(AnalyticsModule::class)
+class SettingsActivityTest {
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @BindValue
+    @JvmField
+    val analytics = FakeAnalyticsService()
+
+    @Test
+    fun analyticsService_shouldTrackEvents() {
+        // Launch activity
+        val scenario = launchActivity<SettingsActivity>()
+        
+        onView(withId(R.id.toggle)).perform(click())
+        assertEquals(1, analytics.trackedEvents.size)
+    }
+}
+
+@Module
+@TestInstallIn(components = [SingletonComponent::class], replaces = [AnalyticsModule::class])
+object FakeAnalyticsModule {
+    @Provides
+    fun provideAnalytics() = FakeAnalyticsService()
+}
+```
+
+## 11.5 Advanced Patterns
+
+### Parameterized Tests
+```kotlin
+class CalculatorTest {
+    companion object {
+        @JvmStatic
+        fun testData() = listOf(
+            Arguments.of(2, 2, 4),
+            Arguments.of(-3, 5, 2),
+            Arguments.of(0, 0, 0)
+        )
+    }
+
+    @ParameterizedTest
+    @MethodSource("testData")
+    fun `test addition`(a: Int, b: Int, expected: Int) {
+        assertEquals(expected, Calculator.add(a, b))
+    }
+}
+```
+
+### Screenshot Testing
+```kotlin
+@RunWith(AndroidJUnit4::class)
+class ScreenshotTest {
+    @get:Rule
+    val rule = ScreenshotTestRule()
+
+    @Test
+    fun mainActivity_shouldRenderCorrectly() {
+        val activity = ActivityScenario.launch(MainActivity::class.java)
+        rule.snapActivity(activity)
+    }
+}
+```
+
+## 11.6 Common Pitfalls
+
+### Flaky Tests
+```kotlin
+// WRONG: Relies on real network
+@Test
+fun loadData_shouldDisplayItems() {
+    // API call may fail randomly
+    onView(withId(R.id.loadButton)).perform(click())
+    onView(withId(R.id.list)).check(matches(hasChildCount(10)))
+}
+
+// CORRECT: Mock dependencies
+@Test
+fun loadData_shouldDisplayMockItems() {
+    // Mock repository returns fixed data
+    onView(withId(R.id.loadButton)).perform(click())
+    onView(withId(R.id.list)).check(matches(hasChildCount(5)))
+}
+```
+
+### Test Pollution
+```kotlin
+class CounterTest {
+    private var counter = 0 // WRONG: Shared state between tests
+
+    @Test
+    fun incrementTest() {
+        counter++
+        assertEquals(1, counter)
+    }
+
+    @Test
+    fun decrementTest() {
+        counter--
+        assertEquals(-1, counter)
+    }
+}
+```
+
+## 11.7 Interview Questions
+
+**Q1: How to test LiveData/Flow in ViewModels?**  
+A: Use Turbine library for Flow:
+```kotlin
+viewModel.data.test {
+    assertEquals(emptyList(), awaitItem())
+    viewModel.loadData()
+    assertEquals(testData, awaitItem())
+    cancelAndIgnoreRemainingEvents()
+}
+```
+
+**Q2: Explain the difference between @Mock and @Spy**  
+A:
+- @Mock: Creates mock object with no real implementation
+- @Spy: Wraps real object, calls real methods unless stubbed
+
+**Q3: How to handle time-dependent tests?**  
+A: Use fake time sources:
+```kotlin
+class TimeSensitiveTest {
+    private val fakeTimeSource = FakeTimeSource()
+    
+    @Test
+    fun expirationCheck() {
+        fakeTimeSource.setCurrentTime(Instant.now())
+        assertFalse(service.isExpired())
+        
+        fakeTimeSource.advanceBy(2.hours)
+        assertTrue(service.isExpired())
+    }
+}
+```
+
+---
+
+Next: **Performance Optimization** or **Security**?
+```
+
+This section provides:
+- Complete testing strategy implementation
+- Modern testing libraries (JUnit 5, MockK, Turbine)
+- Hilt testing integration
+- Parameterized and screenshot testing
+- Flaky test prevention
+- Real-world ViewModel testing
+- Espresso UI test patterns
+- Advanced coroutine testing
+
+(Due to technical issues, the search service is temporarily unavailable.)
+
+```markdown
+# 12. Performance Optimization <a name="performance-optimization"></a>
+
+## 12.1 Memory Management
+
+### Core Concepts
+```mermaid
+graph TD
+    A[Allocation] --> B[Garbage Collection]
+    B --> C[Heap Memory]
+    C --> D[Memory Leaks]
+    D --> E[OOM Crashes]
+```
+
+### Common Leak Patterns & Fixes
+```kotlin
+// LEAK: Static reference to Activity
+object LeakySingleton {
+    var activityRef: MainActivity? = null // WRONG
+}
+
+// FIX: Use WeakReference
+object SafeSingleton {
+    private var weakActivity = WeakReference<MainActivity>(null)
+    fun register(activity: MainActivity) {
+        weakActivity = WeakReference(activity)
+    }
+}
+
+// LEAK: Unclosed resource
+class VideoPlayer : SurfaceView.Callback {
+    fun init() {
+        holder.addCallback(this) // WRONG: Forgot to remove
+    }
+}
+
+// FIX: Lifecycle-aware cleanup
+override fun onDetachedFromWindow() {
+    holder.removeCallback(this)
+    super.onDetachedFromWindow()
+}
+```
+
+### Profiling Tools
+1. **Memory Profiler**: Track heap allocations
+2. **LeakCanary**: Automatic leak detection
+   ```kotlin
+   // Implementation
+   debugImplementation("com.squareup.leakcanary:leakcanary-android:2.12")
+   ```
+3. **MAT/Perfetto**: Heap dump analysis
+
+## 12.2 Battery Optimization
+
+### Doze Mode Adaptation
+```kotlin
+// Check doze state
+val powerManager = getSystemService(POWER_SERVICE) as PowerManager
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    val isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(packageName)
+    if (!isIgnoringBatteryOptimizations) {
+        // Request whitelisting
+        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+            data = Uri.parse("package:$packageName")
+        }
+        startActivity(intent)
+    }
+}
+
+// Schedule work during maintenance windows
+val workRequest = OneTimeWorkRequestBuilder<DataSyncWorker>()
+    .setInitialDelay(1, TimeUnit.HOURS)
+    .setConstraints(Constraints.Builder()
+        .setRequiresDeviceIdle(true)
+        .build())
+    .build()
+WorkManager.getInstance(context).enqueue(workRequest)
+```
+
+### Background Work Best Practices
+```mermaid
+graph LR
+    A[Immediate] --> B[Foreground Service]
+    A --> C[WorkManager]
+    D[Deferrable] --> C
+    D --> E[AlarmManager]
+    E --> F[Exact Alarms Permission]
+```
+
+## 12.3 Render Performance
+
+### UI Rendering Pipeline
+```
+Measure → Layout → Draw → Display
+  │         │        │       │
+  ▼         ▼        ▼       ▼
+CPU Time  View Hier  Overdraw  VSYNC
+```
+
+### Optimization Techniques
+```kotlin
+// RecyclerView Optimization
+val recyclerView = findViewById<RecyclerView>(R.id.list).apply {
+    setHasFixedSize(true) // Stable item sizes
+    itemAnimator = null // Disable animations if unnecessary
+    addItemDecoration(DividerItemDecoration(context, VERTICAL))
+    viewCacheSize = 20 // Default is 2
+}
+
+// Custom View Optimization
+override fun onDraw(canvas: Canvas) {
+    // BAD: Allocation during draw
+    val paint = Paint() // Creates new object each frame
+    
+    // GOOD: Reuse objects
+    cachedPaint.color = Color.RED
+    canvas.drawRect(bounds, cachedPaint)
+}
+```
+
+### Systrace Analysis
+```bash
+# Generate trace file
+$ python systrace.py -o mytrace.html gfx view res
+```
+Key Sections to Analyze:
+- Choreographer#doFrame
+- Traversals
+- Draw
+
+## 12.4 Interview Questions
+
+**Q1: How would you debug a 120Hz UI jank?**  
+A: Process:
+1. Enable profile GPU rendering bars
+2. Use Systrace to identify slow frames
+3. Check main thread blocking operations
+4. Optimize measure/layout passes
+5. Verify vsync alignment
+
+**Q2: Explain the difference between onTrimMemory() and lowMemory()**  
+A:
+- `onTrimMemory()`: Granular memory pressure levels (TRIM_MEMORY_*)
+- `lowMemory()`: Final warning before process kill
+
+**Q3: How to optimize bitmap memory usage?**  
+A:
+```kotlin
+val options = BitmapFactory.Options().apply {
+    inPreferredConfig = Bitmap.Config.RGB_565 // 16-bit
+    inSampleSize = 4 // Downsampling
+    inMutable = false // Enable pooling
+}
+val bitmap = BitmapFactory.decodeResource(resources, R.drawable.large, options)
+
+// Use inBitmap pool for repeated loads
+options.inBitmap = reusedBitmap
+```
+
+**Q4: What's the impact of nested ViewGroups?**  
+A:
+- Exponential measure/layout complexity
+- Increased memory overhead
+- Solution: ConstraintLayout flattening
+  ```xml
+  <androidx.constraintlayout.widget.ConstraintLayout>
+      <!-- Flat hierarchy -->
+  </androidx.constraintlayout.widget.ConstraintLayout>
+  ```
+
+---
+
+Next: **Security** or **Jetpack Libraries**?
+```
+
+This section provides:
+- Complete memory leak prevention patterns
+- Doze mode adaptation strategies
+- UI rendering pipeline optimization
+- Systrace interpretation guide
+- Bitmap handling best practices
+- Real-world interview scenarios
+- Production-grade code samples
+- Performance decision flowcharts
