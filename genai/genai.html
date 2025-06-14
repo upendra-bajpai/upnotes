@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Roadmap: AI Code Review System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF7;
+            color: #3D3D3D;
+        }
+        h1, h2, h3 {
+            font-family: 'Source Serif 4', serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 1000px; /* A large enough value */
+        }
+        .accordion-item.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+        .flow-node {
+            border: 2px solid #E1B382;
+            background-color: #FEFDFB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .flow-line::after {
+            content: '↓';
+            color: #A7C7E7;
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased leading-relaxed">
+
+    <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <header class="text-center my-12 md:my-20">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-800">The AI Code Review System</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An interactive guide to the 12-week strategic roadmap for designing, building, and deploying a scalable, multi-agent AI assistant for GitHub pull requests.</p>
+        </header>
+
+        <nav class="sticky top-0 bg-[#FDFBF7]/80 backdrop-blur-sm z-20 py-4 mb-12 border-b border-gray-200">
+            <ul class="flex items-center justify-center space-x-4 md:space-x-8 text-sm md:text-base font-medium text-gray-500">
+                <li><a href="#roadmap" class="hover:text-[#A7C7E7]">Project Roadmap</a></li>
+                <li><a href="#architecture" class="hover:text-[#A7C7E7]">Architecture</a></li>
+                <li><a href="#learning" class="hover:text-[#A7C7E7]">Learning Hub</a></li>
+                <li><a href="#deployment" class="hover:text-[#A7C7E7]">Deployment</a></li>
+            </ul>
+        </nav>
+
+        <main class="space-y-20 md:space-y-28">
+            
+            <section id="roadmap">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Project Roadmap</h2>
+                <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">A 12-week journey from concept to deployment, broken into four distinct phases. Click on each part to explore its objectives and key tasks.</p>
+                <div id="roadmap-container" class="space-y-4 max-w-4xl mx-auto">
+                </div>
+            </section>
+
+            <section id="architecture">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Architectural Deep Dive</h2>
+                <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">Explore the core components of the system, from the multi-agent model to the frameworks that power it and the serverless architecture that makes it scalable.</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100 h-full">
+                        <h3 class="text-2xl font-bold text-center mb-6">System Flow Diagram</h3>
+                        <p class="text-center mb-8 text-gray-600">The system uses a decoupled, event-driven architecture. A lightweight web service ingests webhook events and writes them to Firestore, which then triggers a scalable Cloud Function to perform the heavy lifting of the AI review process.</p>
+                        <div class="space-y-4 text-center">
+                            <div class="flow-node">1. GitHub Webhook Trigger</div>
+                            <div class="flow-line"></div>
+                            <div class="flow-node">2. FastAPI on Cloud Run (Ingestion & Verification)</div>
+                            <div class="flow-line"></div>
+                            <div class="flow-node bg-[#A7C7E7]/20 border-[#A7C7E7]">3. Create Task in Firestore Collection</div>
+                            <div class="flow-line"></div>
+                            <div class="flow-node">4. Cloud Function Worker (Triggered `onCreate`)</div>
+                            <div class="flow-line"></div>
+                             <div class="flow-node">5. LangGraph Agent Orchestration</div>
+                             <div class="flow-line"></div>
+                            <div class="flow-node">6. Post Comment to GitHub PR</div>
+                        </div>
+                    </div>
+
+                    <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100 h-full">
+                        <h3 class="text-2xl font-bold text-center mb-6">Framework Comparison</h3>
+                        <p class="text-center mb-8 text-gray-600">LangChain with LangGraph is recommended over LangFlow for its production-grade capabilities, superior control over complex agent interactions, and robust observability through LangSmith.</p>
+                        <div class="chart-container">
+                            <canvas id="frameworkChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="learning">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Prerequisites & Learning Hub</h2>
+                <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">This project requires a diverse skill set. Use this learning hub to acquire the necessary knowledge before starting each phase of development. Each module is aligned with a specific part of the project.</p>
+                <div id="learning-accordion" class="space-y-4 max-w-4xl mx-auto">
+                </div>
+            </section>
+            
+            <section id="deployment">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-gray-800">Technology & Deployment</h2>
+                 <p class="text-center text-lg text-gray-600 mb-12 max-w-3xl mx-auto">The system is built on a modern, serverless stack designed for scalability and maintainability from day one.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                     <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-center mb-6">Core Technology Stack</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">📦</span>
+                                <div><strong class="text-gray-800">Containerization (Ingestion):</strong> Docker & Gunicorn for the FastAPI webhook receiver.</div>
+                            </li>
+                             <li class="flex items-start">
+                                <span class="text-3xl mr-4">⚙️</span>
+                                <div><strong class="text-gray-800">Serverless Worker:</strong> Google Cloud Functions for event-driven, scalable AI processing.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">☁️</span>
+                                <div><strong class="text-gray-800">Task Queue Database:</strong> Google Firestore to reliably queue review tasks.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">🧠</span>
+                                <div><strong class="text-gray-800">Vector Store (RAG):</strong> A dedicated managed vector DB (e.g., Pinecone, Astra DB) for context storage.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-3xl mr-4">🚀</span>
+                                <div><strong class="text-gray-800">CI/CD:</strong> GitHub Actions to automate testing, building, and deploying all components.</div>
+                            </li>
+                        </ul>
+                     </div>
+                     <div class="p-8 bg-white rounded-xl shadow-lg border border-gray-100">
+                        <h3 class="text-2xl font-bold text-center mb-6">The Agent Fleet</h3>
+                        <p class="text-center mb-8 text-gray-600">A team of specialized AI agents collaborate to provide a comprehensive code review, orchestrated by a central Supervisor agent.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flow-node text-sm"><span class="text-2xl">📄</span><br>PR Summarizer</div>
+                            <div class="flow-node text-sm"><span class="text-2xl">🛡️</span><br>Security Analyst</div>
+                            <div class="flow-node text-sm"><span class="text-2xl">⚡️</span><br>Performance Engineer</div>
+                            <div class="flow-node text-sm"><span class="text-2xl">📖</span><br>Readability Agent</div>
+                            <div class="flow-node col-span-2 text-sm"><span class="text-2xl">🧪</span><br>Test Coverage Agent</div>
+                        </div>
+                     </div>
+                 </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-20 md:mt-28 pt-8 border-t border-gray-200">
+            <p class="text-gray-500">This interactive application visualizes the "Strategic Roadmap for Building a Scalable, Multi-Agent AI Code Review System."</p>
+        </footer>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const roadmapData = [
+            {
+                part: 'Part I',
+                title: 'Foundation & Framework (Wks 1-2)',
+                description: "Establish the architectural blueprint, select the core GenAI orchestration framework (LangChain/LangGraph), and prepare the development environment for implementation.",
+                tasks: [
+                    "Set up Git, Firebase Project, and API keys.",
+                    "Create and configure the GitHub App.",
+                    "Develop the initial FastAPI backend scaffold.",
+                    "Implement and test the webhook ingestion endpoint."
+                ]
+            },
+            {
+                part: 'Part II',
+                title: 'Core System Implementation (Wks 3-6)',
+                description: 'Build the end-to-end "steel thread" of the application, from PR ingestion via Firestore to posting a comment back to GitHub via a Cloud Function.',
+                tasks: [
+                    "Implement the Supervisor agent orchestrator using LangGraph.",
+                    "Build the first worker agent: the PR Summarizer.",
+                    "Implement webhook signature verification.",
+                    "Develop Cloud Function to process tasks from Firestore."
+                ]
+            },
+            {
+                part: 'Part III',
+                title: 'Expanding the Agent Fleet (Wks 7-10)',
+                description: "Develop the full team of specialist agents and introduce contextual awareness through Retrieval-Augmented Generation (RAG).",
+                tasks: [
+                    "Implement Security, Performance, and Documentation agents.",
+                    "Build the RAG pipeline: ingest data into a vector store.",
+                    "Create a retriever tool for agents to query the codebase.",
+                    "Implement feedback aggregation and a Human-in-the-Loop (HITL) checkpoint."
+                ]
+            },
+            {
+                part: 'Part IV',
+                title: 'Deployment & Scaling (Wks 11-12)',
+                description: "Transition the application from a development prototype to a production-ready, scalable, and observable serverless service.",
+                tasks: [
+                    "Containerize the FastAPI service with Docker.",
+                    "Provision cloud infrastructure on Google Cloud Run & Functions.",
+                    "Create a full CI/CD pipeline with GitHub Actions.",
+                    "Set up full observability with LangSmith and structured logging."
+                ]
+            }
+        ];
+
+        const learningData = [
+            {
+                phase: 'Phase 0: Foundational Knowledge',
+                goal: 'Solidify core Python skills and understand the basics of web services and APIs.',
+                modules: [
+                    { name: 'Advanced Python & Virtual Environments', link: 'https://docs.python.org/3/tutorial/' },
+                    { name: 'APIs & Web Concepts', link: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview' }
+                ]
+            },
+            {
+                phase: 'Before Part I: Environment & Backend Basics',
+                goal: 'Learn to build a basic web server with FastAPI and understand the GitHub Apps workflow.',
+                modules: [
+                    { name: 'FastAPI Fundamentals', link: 'https://fastapi.tiangolo.com/tutorial/' },
+                    { name: 'Introduction to GitHub Apps', link: 'https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps' }
+                ]
+            },
+            {
+                phase: 'Before Part II: Core AI & Serverless Logic',
+                goal: 'Master LangChain for agents and the Firestore/Cloud Functions pattern for task queuing.',
+                modules: [
+                    { name: 'LangChain & LLM Fundamentals', link: 'https://python.langchain.com/v0.2/docs/get_started/' },
+                    { name: 'LangGraph for Multi-Agent Systems', link: 'https://langchain-ai.github.io/langgraph/' },
+                    { name: 'Serverless Task Queuing with Firestore & Cloud Functions', link: 'https://cloud.google.com/functions/docs/calling/firestore'}
+                ]
+            },
+            {
+                phase: 'Before Part III: Advanced AI Capabilities',
+                goal: "Understand how to provide agents with external knowledge using RAG.",
+                modules: [
+                    { name: 'Retrieval-Augmented Generation (RAG)', link: 'https://python.langchain.com/v0.2/docs/tutorials/rag/' }
+                ]
+            },
+            {
+                phase: 'Before Part IV: Production & Deployment',
+                goal: 'Learn how to package, deploy, and monitor a professional serverless service.',
+                modules: [
+                    { name: 'Containerization with Docker', link: 'https://docs.docker.com/get-started/' },
+                    { name: 'Cloud Deployment (Cloud Run) & CI/CD', link: 'https://cloud.google.com/run/docs/quickstarts' }
+                ]
+            }
+        ];
+
+        const roadmapContainer = document.getElementById('roadmap-container');
+        roadmapData.forEach(item => {
+            const element = document.createElement('div');
+            element.className = 'accordion-item bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden';
+            element.innerHTML = `
+                <div class="accordion-header flex justify-between items-center p-6 cursor-pointer hover:bg-gray-50">
+                    <div class="flex items-center">
+                        <span class="text-xl font-bold text-[#A7C7E7] w-20">${item.part}</span>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800">${item.title}</h3>
+                        </div>
+                    </div>
+                    <span class="accordion-arrow text-2xl text-gray-400 transition-transform transform">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="p-6 border-t border-gray-200 bg-gray-50">
+                        <p class="mb-4 text-gray-700">${item.description}</p>
+                        <h4 class="font-semibold mb-2 text-gray-800">Key Tasks:</h4>
+                        <ul class="list-disc list-inside space-y-1 text-gray-600">
+                            ${item.tasks.map(task => `<li>${task}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            roadmapContainer.appendChild(element);
+        });
+
+        const learningAccordion = document.getElementById('learning-accordion');
+        learningData.forEach(item => {
+            const element = document.createElement('div');
+            element.className = 'accordion-item bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden';
+            element.innerHTML = `
+                <div class="accordion-header flex justify-between items-center p-6 cursor-pointer hover:bg-gray-50">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">${item.phase}</h3>
+                        <p class="text-sm text-gray-500">${item.goal}</p>
+                    </div>
+                    <span class="accordion-arrow text-2xl text-gray-400 transition-transform transform">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="p-6 border-t border-gray-200 bg-gray-50">
+                        <h4 class="font-semibold mb-3 text-gray-800">Learning Modules & Resources:</h4>
+                        <div class="space-y-3">
+                        ${item.modules.map(module => `
+                            <a href="${module.link}" target="_blank" rel="noopener noreferrer" class="block p-3 bg-white rounded-md hover:bg-[#A7C7E7]/20 border border-gray-200 transition">
+                                <p class="font-semibold text-gray-700">${module.name}</p>
+                                <p class="text-xs text-[#A7C7E7] font-medium">Go to resource →</p>
+                            </a>
+                        `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            learningAccordion.appendChild(element);
+        });
+
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const accordionItem = header.parentElement;
+                accordionItem.classList.toggle('active');
+            });
+        });
+
+        const wrapLabel = (label) => {
+            const maxWidth = 16;
+            if (typeof label !== 'string' || label.length <= maxWidth) {
+                return label;
+            }
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            }
+            return label;
+        };
+        
+        const frameworkCtx = document.getElementById('frameworkChart').getContext('2d');
+        const frameworkChartData = {
+            labels: ['Scalability', 'Observability', wrapLabel('Customization & Extensibility'), wrapLabel('Development Velocity')],
+            datasets: [
+                {
+                    label: 'LangChain/LangGraph',
+                    data: [90, 95, 95, 60],
+                    backgroundColor: '#A7C7E7',
+                    borderColor: '#89b3d9',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                },
+                {
+                    label: 'LangFlow',
+                    data: [50, 40, 60, 90],
+                    backgroundColor: '#E1B382',
+                    borderColor: '#d4a16a',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                }
+            ]
+        };
+
+        new Chart(frameworkCtx, {
+            type: 'bar',
+            data: frameworkChartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    title: { display: false },
+                    legend: {
+                        position: 'top',
+                         labels: { font: { size: 12, family: "'Inter', sans-serif" }, color: '#3D3D3D' }
+                    },
+                    tooltip: {
+                         callbacks: { title: tooltipTitleCallback }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {return value + '%'},
+                            font: { size: 12, family: "'Inter', sans-serif" },
+                            color: '#6b7280'
+                        },
+                        grid: { color: '#e5e7eb' }
+                    },
+                    y: {
+                        ticks: {
+                           font: { size: 12, family: "'Inter', sans-serif" },
+                           color: '#374151'
+                        },
+                         grid: { display: false }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
