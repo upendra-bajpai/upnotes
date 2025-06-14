@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;AI-Augmented SDLC: A Visual Report&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #050A30;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #FFFFFF;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 300px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@media (min-width: 768px) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.flow-line {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.flow-line::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #7EC8E3;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.flow-line-horizontal {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.flow-line-horizontal::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>right: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 2rem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #7EC8E3;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.timeline-item::before {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: -31px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 9999px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #7EC8E3;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 4px solid #0033CC;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 10;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="antialiased"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container mx-auto p-4 md:p-8"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;header class="text-center mb-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="text-4xl md:text-6xl font-black text-white leading-tight"&gt;The Future of Code Review&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-lg md:text-xl text-[#7EC8E3] mt-4 max-w-3xl mx-auto"&gt;A Strategic Report on Building a Scalable, Multi-Agent AI System to Augment the Software Development Lifecycle&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;main class="space-y-16"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="architecture"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-[#7EC8E3]"&gt;Architectural Blueprint&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center text-lg mb-10 max-w-4xl mx-auto"&gt;Moving beyond monolithic linters, the proposed solution employs a sophisticated Supervisor-Worker model. This mirrors an expert human team, where a central orchestrator delegates specialized tasks to a fleet of AI agents for a deep, contextual analysis.&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex flex-col items-center text-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-4 bg-[#050A30] rounded-full mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-4xl"&gt;🗂️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="font-bold text-lg text-white"&gt;1. PR Ingestion&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-gray-300"&gt;A GitHub App securely sends PR data to a scalable API endpoint.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-center md:col-span-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-6 bg-[#050A30] rounded-xl shadow-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h3 class="text-xl font-bold text-[#7EC8E3] mb-2"&gt;Supervisor Agent&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-sm mb-4"&gt;Analyzes the PR and orchestrates the workflow, delegating tasks to the appropriate specialist.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="w-24 h-24 mx-auto bg-[#0033CC] rounded-full flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="text-5xl"&gt;🤖&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex flex-col items-center text-center p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-4 bg-[#050A30] rounded-full mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-4xl"&gt;📝&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="font-bold text-lg text-white"&gt;3. Feedback Delivery&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-gray-300"&gt;The Supervisor aggregates all feedback into a single, coherent comment and posts it to the PR.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-8 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;span class="text-2xl text-[#7EC8E3]"&gt;▼&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;p class="text-lg font-semibold mt-2"&gt;Delegates to a Fleet of Specialists&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-[#050A30] p-4 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-2xl mb-2"&gt;📄&lt;/p&gt;&lt;p class="font-semibold text-sm"&gt;PR Summarizer&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-[#050A30] p-4 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-2xl mb-2"&gt;🛡️&lt;/p&gt;&lt;p class="font-semibold text-sm"&gt;Security Analyst&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-[#050A30] p-4 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-2xl mb-2"&gt;⚡&lt;/p&gt;&lt;p class="font-semibold text-sm"&gt;Performance Engineer&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-[#050A30] p-4 rounded-lg"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-2xl mb-2"&gt;📖&lt;/p&gt;&lt;p class="font-semibold text-sm"&gt;Doc &amp; Readability Agent&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-[#050A30] p-4 rounded-lg col-span-2 md:col-span-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-2xl mb-2"&gt;🧪&lt;/p&gt;&lt;p class="font-semibold text-sm"&gt;Test Coverage Agent&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="market-landscape" class="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-3xl font-bold text-center mb-6 text-[#7EC8E3]"&gt;Framework Analysis&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-6"&gt;Choosing the right orchestration framework is critical for scalability and control. LangChain with LangGraph is recommended for its production-grade features over more visual, prototype-focused tools.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="overflow-x-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;table class="w-full text-sm text-left"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;thead class="text-xs text-[#7EC8E3] uppercase bg-[#050A30]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-6 py-3 rounded-l-lg"&gt;Criterion&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-6 py-3"&gt;LangChain/LangGraph&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="col" class="px-6 py-3 rounded-r-lg"&gt;LangFlow&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-[#000C66] border-b border-[#050A30]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="row" class="px-6 py-4 font-medium whitespace-nowrap"&gt;Control Model&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Code-as-Config (Explicit)&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Visual Drag-and-Drop&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-[#000C66] border-b border-[#050A30]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="row" class="px-6 py-4 font-medium whitespace-nowrap"&gt;Scalability&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;High (Enterprise-Grade)&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Low-to-Medium&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;tr class="bg-[#000C66] border-b border-[#050A30]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="row" class="px-6 py-4 font-medium whitespace-nowrap"&gt;Observability&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Deep (via LangSmith)&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Limited&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;tr class="bg-[#000C66]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;th scope="row" class="px-6 py-4 font-medium whitespace-nowrap"&gt;Best For&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4 font-bold text-white"&gt;Production Systems&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;td class="px-6 py-4"&gt;Rapid Prototyping&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-3xl font-bold text-center mb-6 text-[#7EC8E3]"&gt;Proposed Technology Stack&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center mb-6"&gt;A modern, scalable stack is chosen to support the system, balancing robust backend services with powerful AI orchestration and containerized deployment.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;canvas id="techStackChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;section id="live-demo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-3xl font-bold text-center mb-2 text-[#7EC8E3]"&gt;Live Demonstration&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-center text-lg mb-8 max-w-3xl mx-auto"&gt;Test the power of an AI code review agent. The sample Python code below has several issues. Click the button to have Gemini generate a constructive review.&lt;/p&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label for="code-input" class="block mb-2 text-sm font-medium text-gray-300"&gt;Sample Code Snippet&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;textarea id="code-input" rows="12" class="block p-2.5 w-full text-sm text-gray-200 bg-[#050A30] rounded-lg border border-[#0033CC] focus:ring-[#7EC8E3] focus:border-[#7EC8E3] font-mono"&gt;# A simple function to find the sum of squares</p>
+<p class="p1">def calculate_sum_of_squares(number_list):</p>
+<p class="p1"><span class="Apple-converted-space">    </span>total = 0</p>
+<p class="p1"><span class="Apple-converted-space">    </span># Inefficiently looping through the list</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for i in range(len(number_list)):</p>
+<p class="p1"><span class="Apple-converted-space">        </span>total += number_list[i] * number_list[i]</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span># A magic number for a bonus, what does 42 mean?</p>
+<p class="p1"><span class="Apple-converted-space">    </span>total = total + 42</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return total</p>
+<p class="p2"><br></p>
+<p class="p1">print(calculate_sum_of_squares([1, 2, 3]))&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button id="generate-review-btn" class="mt-4 w-full bg-[#0033CC] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="mr-2"&gt;✨&lt;/span&gt; Generate Review</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;label for="review-output" class="block mb-2 text-sm font-medium text-gray-300"&gt;AI-Generated Review&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div id="review-output" class="p-4 w-full h-80 bg-[#050A30] rounded-lg border border-[#0033CC] overflow-y-auto whitespace-pre-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div id="loading-spinner" class="hidden h-full w-full flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-[#7EC8E3]"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p id="placeholder-text" class="text-gray-400"&gt;Your generated code review will appear here...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="roadmap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="text-3xl font-bold text-center mb-10 text-[#7EC8E3]"&gt;12-Week Implementation Roadmap&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="relative pl-8 border-l-2 border-[#0033CC]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-12 relative timeline-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-xl font-bold text-white"&gt;Part I: Foundation &amp; Framework (Weeks 1-2)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-300 mt-2"&gt;Establish architectural blueprint, select LangGraph as the core framework, set up the GitHub App, and create the initial FastAPI backend scaffold. The goal is to achieve end-to-end communication via webhooks.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-12 relative timeline-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-xl font-bold text-white"&gt;Part II: Core System Implementation (Weeks 3-6)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-300 mt-2"&gt;Build the "steel thread" of the application. Implement the Supervisor agent orchestrator, the first `PR Summarizer` worker agent, and secure the full GitHub integration loop, including posting comments back to the PR.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="mb-12 relative timeline-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-xl font-bold text-white"&gt;Part III: Expanding Agent Fleet &amp; RAG (Weeks 7-10)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-300 mt-2"&gt;Develop the full team of specialist agents (Security, Performance, etc.). Implement a Retrieval-Augmented Generation (RAG) pipeline to provide agents with repository-specific context, making their reviews smarter and more relevant.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="relative timeline-item"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-xl font-bold text-white"&gt;Part IV: Deployment &amp; Scaling (Weeks 11-12)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-gray-300 mt-2"&gt;Containerize the application with Docker, deploy to a scalable cloud platform like Google Cloud Run, and integrate comprehensive observability with LangSmith and structured logging. Prepare for pilot launch.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;section id="capabilities"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-[#000C66] rounded-2xl shadow-2xl p-6 md:p-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 class="text-3xl font-bold mb-4 text-[#7EC8E3]"&gt;Context-Aware Reviews with RAG&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="mb-6"&gt;Standard AI reviews lack project-specific knowledge. By implementing Retrieval-Augmented Generation (RAG), our agents gain a "long-term memory." They can query a vector database of the repository's codebase and documentation to provide suggestions that align with existing patterns and architectural principles, transforming them from generic critics into true teammates.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="bg-[#050A30] rounded-lg p-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="flex items-center justify-between flow-line"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;p class="text-4xl"&gt;🤖&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;p class="font-bold"&gt;Agent&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="flex-grow border-t-2 border-dashed border-[#0033CC] mx-4"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;p class="text-sm font-semibold"&gt;"How is error handling done here?"&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="flex-grow border-t-2 border-dashed border-[#0033CC] mx-4"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                         </span>&lt;p class="text-4xl"&gt;📚&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;p class="font-bold"&gt;Vector DB&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-center mt-6 text-sm text-[#7EC8E3]"&gt;The agent queries the knowledge base, retrieves relevant code snippets, and grounds its final review in the project's specific context.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 class="text-3xl font-bold mb-4 text-center text-[#7EC8E3]"&gt;Comprehensive Review Coverage&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-center mb-6"&gt;The multi-agent approach ensures deep analysis across critical domains of software quality. Each agent focuses on a specific area, providing expert-level feedback that a single model would miss.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="chart-container h-96 max-h-[500px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;canvas id="coverageChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/section&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/main&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;footer class="text-center mt-16 border-t border-t-[#0033CC] pt-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-gray-400"&gt;This infographic presents a strategic summary of the "A Strategic Roadmap for Building a Scalable, Multi-Agent AI Code Review System on GitHub" report. The project prioritizes robust, scalable, and observable architecture to create a foundational component for a truly AI-augmented SDLC.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/footer&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const wrapLabel = (label, maxWidth) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (label.length &lt;= maxWidth) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const words = label.split(' ');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const lines = [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentLine = '';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>words.forEach(word =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if ((currentLine + ' ' + word).trim().length &gt; maxWidth) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>lines.push(currentLine.trim());</p>
+<p class="p1"><span class="Apple-converted-space">                </span>currentLine = word;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>currentLine = (currentLine + ' ' + word).trim();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (currentLine) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>lines.push(currentLine.trim());</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return lines;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const tooltipTitleCallback = (tooltipItems) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const item = tooltipItems[0];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let label = item.chart.data.labels[item.dataIndex];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (Array.isArray(label)) {</p>
+<p class="p1"><span class="Apple-converted-space">          </span>return label.join(' ');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const chartOptionsBase = {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>legend: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>labels: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: '#FFFFFF',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>family: "'Inter', sans-serif"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tooltip: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>callbacks: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: tooltipTitleCallback</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ticks: {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: '#7EC8E3',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>family: "'Inter', sans-serif"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>grid: { color: 'rgba(126, 200, 227, 0.2)' }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>},</p>
+<p class="p1"><span class="Apple-converted-space">            </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>ticks: {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>color: '#7EC8E3',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>family: "'Inter', sans-serif"</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>grid: { color: 'rgba(126, 200, 227, 0.2)' }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const techStackCtx = document.getElementById('techStackChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>new Chart(techStackCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>type: 'doughnut',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>labels: ['Orchestration (LangGraph)', 'Backend (FastAPI, Celery)', 'Deployment (Docker, Cloud Run)', 'Observability (LangSmith)'],</p>
+<p class="p1"><span class="Apple-converted-space">            </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>label: 'Technology Stack',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: [30, 35, 25, 10],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>backgroundColor: ['#0033CC', '#3B82F6', '#7EC8E3', '#001a66'],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>borderColor: '#000C66',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>borderWidth: 4</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>...chartOptionsBase,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>scales: { y: { display: false }, x: { display: false } }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const coverageCtx = document.getElementById('coverageChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>new Chart(coverageCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>labels: ['Security Analysis', 'Performance Optimization', wrapLabel('Documentation &amp; Readability', 16), 'Test Coverage', 'PR Summarization'].map(l =&gt; typeof l === 'string' ? wrapLabel(l, 16) : l),</p>
+<p class="p1"><span class="Apple-converted-space">            </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                </span>label: 'Impact on Code Quality',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: [90, 85, 95, 80, 70],</p>
+<p class="p1"><span class="Apple-converted-space">                </span>backgroundColor: '#0033CC',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>borderColor: '#7EC8E3',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>borderWidth: 2,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>borderRadius: 5,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">        </span>},</p>
+<p class="p1"><span class="Apple-converted-space">        </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>...chartOptionsBase,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>indexAxis: 'y',</p>
+<p class="p1"><span class="Apple-converted-space">             </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>y: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ticks: {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>color: '#7EC8E3',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>family: "'Inter', sans-serif",</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>size: 10</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>grid: { color: 'rgba(126, 200, 227, 0.1)' }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>x: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>ticks: {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>color: '#7EC8E3',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>font: {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>family: "'Inter', sans-serif"</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>grid: { color: 'rgba(126, 200, 227, 0.2)' }</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>const generateBtn = document.getElementById('generate-review-btn');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const codeInput = document.getElementById('code-input');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const reviewOutput = document.getElementById('review-output');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const loadingSpinner = document.getElementById('loading-spinner');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const placeholderText = document.getElementById('placeholder-text');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>generateBtn.addEventListener('click', async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const userCode = codeInput.value;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if (!userCode.trim()) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>reviewOutput.textContent = 'Please enter some code to review.';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>placeholderText.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>reviewOutput.textContent = '';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>loadingSpinner.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>generateBtn.disabled = true;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const prompt = `You are an expert AI code review assistant. Your goal is to provide a concise, constructive, and friendly code review for the following Python snippet. Focus on identifying potential bugs, style issues (following PEP 8), performance improvements, and lack of clarity. Structure your feedback with clear headings for each point you raise.</p>
+<p class="p2"><br></p>
+<p class="p1">Here is the code:</p>
+<p class="p1">\`\`\`python</p>
+<p class="p1">${userCode}</p>
+<p class="p1">\`\`\``;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const payload = { contents: chatHistory };</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const apiKey = "";<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const response = await fetch(apiUrl, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>headers: { 'Content-Type': 'application/json' },</p>
+<p class="p1"><span class="Apple-converted-space">                </span>body: JSON.stringify(payload)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!response.ok) {</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>throw new Error(`API Error: ${response.statusText} (Status: ${response.status})`);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const result = await response.json();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>let text = 'Could not retrieve a review. Please try again.';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (result.candidates &amp;&amp; result.candidates.length &gt; 0 &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>result.candidates[0].content &amp;&amp; result.candidates[0].content.parts &amp;&amp;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>result.candidates[0].content.parts.length &gt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">              </span>text = result.candidates[0].content.parts[0].text;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>reviewOutput.textContent = text;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.error("Error calling Gemini API:", error);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>reviewOutput.textContent = `An error occurred: ${error.message}. Please check the console for more details.`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} finally {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loadingSpinner.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>generateBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
